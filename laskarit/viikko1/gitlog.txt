@@ -1,0 +1,125 @@
+Saaras-MacBook-Air:ot_viikko1 SKoskipaa$ git log --stat | cat
+commit 30c1b26e0620281f3af28dd4c1ef29df5b6a470c
+Author: Saara Koskipaa <39309728+skoskipaa@users.noreply.github.com>
+Date:   Tue Mar 12 19:45:37 2019 +0200
+
+    Valtava määrä muutoksia harjoitustyöhön...
+
+ tiedostoja/file2             | 0
+ tiedostoja/{file1 => file22} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit c2dc521a7b6ae129c9a7937803940d9e79c4c4bc
+Author: Saara Koskipaa <39309728+skoskipaa@users.noreply.github.com>
+Date:   Tue Mar 12 19:38:22 2019 +0200
+
+    Uusia filuja
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 48116fba9f5372d6db62ce3de0eb88f529a4616c
+Author: Saara Koskipaa <39309728+skoskipaa@users.noreply.github.com>
+Date:   Tue Mar 12 19:31:11 2019 +0200
+
+    muutoksia lissää
+
+ eka.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 7fa4b548ef9822985cbecd5e68728f9c0752d85e
+Author: Saara Koskipaa <39309728+skoskipaa@users.noreply.github.com>
+Date:   Tue Mar 12 19:29:51 2019 +0200
+
+    muutoksia
+
+ eka.txt    | 1 +
+ kolmas.txt | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+commit 3733cc16e482279e21d3f3091c6c29b0ad02e84b
+Author: Saara Koskipaa <39309728+skoskipaa@users.noreply.github.com>
+Date:   Mon Mar 11 21:48:26 2019 +0200
+
+    uudelleennimetty tiedostoksi eka
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 2f24f0ccb35eddbf425b225566199aa5692abd90
+Author: Saara Koskipaa <39309728+skoskipaa@users.noreply.github.com>
+Date:   Mon Mar 11 21:46:56 2019 +0200
+
+    poistettu tiedosto toinen.txt
+
+ toinen.txt | 2 --
+ 1 file changed, 2 deletions(-)
+
+commit be82fe5e0e01bb61eb59537ed8c28ee7c8013610
+Author: Saara Koskipaa <39309728+skoskipaa@users.noreply.github.com>
+Date:   Mon Mar 11 21:43:48 2019 +0200
+
+    muutos ja poisto
+
+ tiedosto.txt | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+commit b7c08774a2d12bd5fe871a67cbbf6259f216b82b
+Author: Saara Koskipaa <39309728+skoskipaa@users.noreply.github.com>
+Date:   Mon Mar 11 21:42:32 2019 +0200
+
+    muutos tiedostoon
+
+ tiedosto.txt | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+commit 82ddcc5307a88c5bedfd56512d3c317be88a1275
+Author: Saara Koskipaa <39309728+skoskipaa@users.noreply.github.com>
+Date:   Mon Mar 11 21:29:09 2019 +0200
+
+    uusi hakemisto
+
+ stuff/jokutiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 81f8436db8983cd00c3ffe9a2dbb36cc9aade51c
+Author: Saara Koskipaa <39309728+skoskipaa@users.noreply.github.com>
+Date:   Mon Mar 11 21:27:05 2019 +0200
+
+    muutokset tiedostoihin
+
+ kolmas.txt | 2 ++
+ toinen.txt | 2 ++
+ 2 files changed, 4 insertions(+)
+
+commit 74e44aab0c029834a0317169cf0722be43ddc011
+Author: Saara Koskipaa <39309728+skoskipaa@users.noreply.github.com>
+Date:   Mon Mar 11 21:25:44 2019 +0200
+
+    kolmas tiedosto lisätty
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 246ae74694980231120078fd1d7bb6a21da5af92
+Author: Saara Koskipaa <39309728+skoskipaa@users.noreply.github.com>
+Date:   Mon Mar 11 21:22:22 2019 +0200
+
+    muutos ja uusi tiedosto
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 9360bc2c291c0d75a76d4243ad12f6e79367cfaa
+Author: Saara Koskipaa <39309728+skoskipaa@users.noreply.github.com>
+Date:   Mon Mar 11 21:19:17 2019 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+Saaras-MacBook-Air:ot_viikko1 SKoskipaa$ 
+
