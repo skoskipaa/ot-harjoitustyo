@@ -1,6 +1,13 @@
-# Tästä tulee tämän tekstin **otsikko**
+# OT-harjoitustyö
 
-## Ja tästä pieni _alaotsikko_
+## Tehtävät
+### Viikko 1
+
+[gitlog.txt](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
+
+[komentorivi.txt](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
+
+
 
 
 Vielä pitäisi keksiä hieman lisää _asiaa_. Listataan siis parhaat **eläimet**:
