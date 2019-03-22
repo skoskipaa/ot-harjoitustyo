@@ -1,4 +1,5 @@
 # OT-harjoitustyö
+[Työaikakirjanpito](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/tyoaikakirjanpito.md)
 
 ## Tehtävät
 ### Viikko 1
