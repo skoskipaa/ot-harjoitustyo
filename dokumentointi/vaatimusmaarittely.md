@@ -15,6 +15,10 @@ Sovellukseen tulee graafinen käyttöliittymä, joka sisältää kolme näkymä�
 syöttönäkymän ja tapahtuman syöttönäkymän. Päävalikossa on myös mahdollista listata ajoneuvon 
 tapahtumahistoria.
 
+## Toimintaympäristö
+Sovellus toimii Linux- ja OSX-käyttöjärjestelmillä. Sovelluksen tiedot tallennetaan paikallisesti koneen
+levylle tiedostoon tai tietokantaan.
+
 ## Perusversion toiminnallisuus
 Käyttäjä voi
 * Lisätä järjestelmään uuden ajoneuvon. Ajoneuvosta syötetään rekisteritunnus ja ajokilometrit.
