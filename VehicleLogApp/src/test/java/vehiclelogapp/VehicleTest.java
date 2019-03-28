@@ -1,5 +1,5 @@
 
-package vehiclelog.domain.test;
+package vehiclelogapp;
 
 import org.junit.After;
 import org.junit.AfterClass;
