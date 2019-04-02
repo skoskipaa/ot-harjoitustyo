@@ -1,35 +1,47 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package vehiclelogapp;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import vehiclelogapp.domain.Entry;
 
-/**
- *
- * @author SKoskipaa
- */
+
 public class EntryTest {
-    
-    
+    private Entry entry;
+    private Entry entry2;
+    private Entry entry3;
     
     @Before
     public void setUp() {
+        Timestamp date = Timestamp.valueOf(LocalDateTime.now());
+        
+        entry = new Entry();
+        entry2 = new Entry(1, 1, 13000, date, "Pekka", "Kuljetus");
+        entry3 = new Entry(1, 13500, date, "Jukka", "Huolto");
         
     }
     
+    @Test
+    public void constructorsOk() {
+        assertTrue(entry != null && entry2 != null && entry3 != null);
+    }
     
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void getId() {
+        assertEquals(1, entry2.getId());
+    }
+    
+    @Test
+    public void setId() {
+        entry3.setId(2);
+        assertEquals(2, entry3.getId());
+    }
+    
+    
 }
