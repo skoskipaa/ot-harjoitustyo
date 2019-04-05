@@ -7,5 +7,6 @@
 |28.3.2019  |2  |Ohjelmakoodin kirjoitusta |
 |1.4.2019   |2.5|Ohjelmakoodin kirjoitusta |
 |2.4.2019   |2.5|Ohjelmakoodin ja testien kirjoitusta |
+|5.4.2019   |2  |Graafisen käyttöliittymäm suunnittelu ja elementit|
 
-Yhteensä 11 tuntia
+Yhteensä 13 tuntia
