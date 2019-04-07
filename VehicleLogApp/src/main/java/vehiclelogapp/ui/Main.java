@@ -5,22 +5,28 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
+import javafx.application.Application;
 import vehiclelogapp.domain.VehicleLogService;
 
 
 public class Main {
     
-    public static void main(String[] args) throws SQLException {
-        
+    public static void main(String[] args) {
         //setUpDatabase();
-        Scanner reader = new Scanner(System.in);
-        VehicleLogService service = new VehicleLogService();
-        
-        TextInterface ui = new TextInterface(reader, service);
-        ui.startApplication();
-        
-       
+        Application.launch(GraphicInterface.class);
     }
+    
+//    public static void main(String[] args) throws SQLException {
+//        
+//        //setUpDatabase();
+//        Scanner reader = new Scanner(System.in);
+//        VehicleLogService service = new VehicleLogService();
+//        
+//        TextInterface ui = new TextInterface(reader, service);
+//        ui.startApplication();
+//        
+//       
+//    }
     
     private static void setUpDatabase() {
 

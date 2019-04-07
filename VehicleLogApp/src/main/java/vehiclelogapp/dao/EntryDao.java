@@ -19,7 +19,7 @@ public class EntryDao implements Dao<Entry, Integer> {
         Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "");
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Entry (vehicle_id, date, odometerread, driver, type)"
                 + " VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-        stmt.setInt(1, entry.getVehicle_id());
+        stmt.setInt(1, entry.getVehicleId());
         stmt.setTimestamp(2, entry.getTime());
         stmt.setInt(3, entry.getOdometer());
         stmt.setString(4, entry.getDriver());
@@ -89,11 +89,11 @@ public class EntryDao implements Dao<Entry, Integer> {
         return entries;
     }
 
-    public ArrayList<Entry> listEntriesForVehicle(Integer vehicle_id) throws SQLException {
+    public ArrayList<Entry> listEntriesForVehicle(Integer vehicleId) throws SQLException {
 
         Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "");
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Entry WHERE vehicle_id = ?");
-        stmt.setInt(1, vehicle_id);
+        stmt.setInt(1, vehicleId);
         ResultSet rs = stmt.executeQuery();
 
         ArrayList<Entry> entries = new ArrayList<>();
@@ -107,5 +107,28 @@ public class EntryDao implements Dao<Entry, Integer> {
         rs.close();
         conn.close();
         return entries;
+    }
+    
+    public int latestOdometerForVehicle(Integer vehicleId) throws SQLException {
+        
+        Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Entry WHERE vehicle_id = ? "
+                + "ORDER BY date DESC");
+        stmt.setInt(1, vehicleId);
+        
+        ResultSet rs = stmt.executeQuery();
+        ArrayList<Entry> entries = new ArrayList<>();
+        while (rs.next()) {
+            Entry toAdd = new Entry(rs.getInt("id"), rs.getInt("vehicle_id"), rs.getInt("odometerread"),
+                    rs.getTimestamp("date"), rs.getString("driver"), rs.getString("type"));
+            entries.add(toAdd);
+        }
+        //lue Entryn odometer
+        int res = entries.get(0).getOdometer();
+        stmt.close();
+        rs.close();
+        conn.close();
+
+        return res;
     }
 }

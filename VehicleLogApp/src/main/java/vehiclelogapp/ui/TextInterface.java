@@ -90,10 +90,10 @@ public class TextInterface {
     
     public void listVehicles() throws SQLException {
         
-        ArrayList<Vehicle> vehicles = service.listVehicles();
-        for (Vehicle v : vehicles) {
-            System.out.println(v);
-        }
+//        ArrayList<Vehicle> vehicles = service.listVehicles();      // vastaus stringinä!!!
+//        for (Vehicle v : vehicles) {
+//            System.out.println(v);
+//        }
     }
     
     public void listEntriesForVehicle() throws SQLException {
@@ -101,15 +101,15 @@ public class TextInterface {
         System.out.print("Minkä auton tapahtumat listataan? ");
         String licensePlate = reader.nextLine();
         
-        ArrayList<Entry> entries = service.listEntriesForVehicle(licensePlate);
-        if (entries == null) {
-            System.out.println("Autoa ei löytynyt!");
-            return;
-        }
-        for (Entry e : entries) {
-            System.out.println(e);
-        }
-        
+//        ArrayList<Entry> entries = service.listEntriesForVehicle(licensePlate);       // pal Stringin
+//        if (entries == null) {
+//            System.out.println("Autoa ei löytynyt!");
+//            return;
+//        }
+//        for (Entry e : entries) {
+//            System.out.println(e);
+//        }
+//        
     }
 
 }

@@ -22,9 +22,12 @@ public class VehicleLogService {
         this.entryDao = new EntryDao();
 
     }
+    
+    // Auton olemassaolon yhteydessä
+    // palautetaan viimeisin lukema -> ????????
 
     public boolean addVehicle(String licensePlate, int kilometers) throws SQLException {
-        licensePlate = licensePlate.toUpperCase().trim();    //////////
+        licensePlate = licensePlate.toUpperCase().trim();
 
         Integer key = vehicleDao.getVehicleId(licensePlate);
         if (key != null) {
@@ -41,13 +44,13 @@ public class VehicleLogService {
 
     public boolean addEntry(String licensePlate, int km, String driver, String entryType) throws SQLException {
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
-        licensePlate = licensePlate.toUpperCase().trim();    //////////
+        licensePlate = licensePlate.toUpperCase().trim();
 
-        Integer vehicle_id = vehicleDao.getVehicleId(licensePlate);
-        if (vehicle_id == null) {
+        Integer vehicleId = vehicleDao.getVehicleId(licensePlate);
+        if (vehicleId == null) {
             return false;
         }
-        Entry entryToAdd = new Entry(vehicle_id, km, date, driver, entryType);
+        Entry entryToAdd = new Entry(vehicleId, km, date, driver, entryType);
         Entry e = entryDao.create(entryToAdd);
 
         if (e == null) {
@@ -56,24 +59,49 @@ public class VehicleLogService {
         return true;
     }
 
-    public ArrayList<Vehicle> listVehicles() throws SQLException {
+    public ArrayList<String> listVehicles() throws SQLException {
         ArrayList<Vehicle> vehicles = vehicleDao.list();
-        return vehicles;
+        ArrayList<String> queryResults = new ArrayList<>();
+        vehicles.forEach((v) -> {
+            queryResults.add(v.toString());
+        });
+        
+        return queryResults;
     }
 
-    public ArrayList<Entry> listAllEntries() throws SQLException {
-        ArrayList<Entry> entries = entryDao.list();
-        return entries;
-    }
-
-    public ArrayList<Entry> listEntriesForVehicle(String licensePlate) throws SQLException {
-        licensePlate = licensePlate.toUpperCase().trim();    //////////
-        Integer vehicle_id = vehicleDao.getVehicleId(licensePlate);
-        if (vehicle_id == null) {
+    public ArrayList<String> listEntriesForVehicle(String licensePlate) throws SQLException {
+        licensePlate = licensePlate.toUpperCase().trim();
+        Integer vehicleId = vehicleDao.getVehicleId(licensePlate);
+        if (vehicleId == null) {
             return null;
         }
 
-        ArrayList<Entry> entries = entryDao.listEntriesForVehicle(vehicle_id);
-        return entries;
+        ArrayList<Entry> entries = entryDao.listEntriesForVehicle(vehicleId);
+        ArrayList<String> queryResults = new ArrayList<>();
+        entries.forEach((e) -> {
+            queryResults.add(e.toString());
+        });
+        return queryResults;
+    }
+    
+    public int getLatestOdometer(String licensePlate) throws SQLException {
+        licensePlate = licensePlate.toUpperCase().trim();
+        Integer vehicleId = vehicleDao.getVehicleId(licensePlate);
+        if (vehicleId == null) {
+            return 0;
+        }
+        int result = entryDao.latestOdometerForVehicle(vehicleId);
+        return result;
+    }
+    
+    public boolean vehicleExists(String licensePlate) throws SQLException {
+        licensePlate = licensePlate.toUpperCase().trim();
+        Integer vehicleId = vehicleDao.getVehicleId(licensePlate);
+        
+        if (vehicleId == null) {
+            return false;
+        }
+        
+        return true;
     }
 }

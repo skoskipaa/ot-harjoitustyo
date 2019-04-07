@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public class Entry {
 
     private int id;
-    private Integer vehicle_id;
+    private Integer vehicleId;
     private int odometer;
     private Timestamp time;
     private String driver;
@@ -15,17 +15,17 @@ public class Entry {
     public Entry() {
     }
 
-    public Entry(int id, Integer vehicle_id, int odometer, Timestamp time, String driver, String entryType) {
+    public Entry(int id, Integer vehicleId, int odometer, Timestamp time, String driver, String entryType) {
         this.id = id;
-        this.vehicle_id = vehicle_id;
+        this.vehicleId = vehicleId;
         this.odometer = odometer;
         this.time = time;
         this.driver = driver;
         this.entryType = entryType;
     }
 
-    public Entry(Integer vehicle_id, int odometer, Timestamp time, String driver, String entryType) {
-        this.vehicle_id = vehicle_id;
+    public Entry(Integer vehicleId, int odometer, Timestamp time, String driver, String entryType) {
+        this.vehicleId = vehicleId;
         this.odometer = odometer;
         this.time = time;
         this.driver = driver;
@@ -47,12 +47,12 @@ public class Entry {
         this.id = id;
     }
 
-    public Integer getVehicle_id() {
-        return vehicle_id;
+    public Integer getVehicleId() {
+        return vehicleId;
     }
 
-    public void setVehicle_id(Integer vehicle_id) {
-        this.vehicle_id = vehicle_id;
+    public void setVehicleId(Integer vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public int getOdometer() {
@@ -89,7 +89,7 @@ public class Entry {
 
     @Override
     public String toString() {
-        return "Odometer: " + odometer + ", time: " + time + ", driver: " + driver + ", type: " + entryType;
+        return time + ", " + odometer + ", " + driver + ", " + entryType;
     }
 
 }
