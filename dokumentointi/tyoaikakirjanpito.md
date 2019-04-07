@@ -10,5 +10,5 @@
 |5.4.2019   |5  |Graafisen käyttöliittymän suunnittelu ja elementtien luonti|
 |6.4.2019   |3  |Toiminnallisuuden siirto graafiseen käyttöliittymään|
 |6.4.2019   |2  |Checkstylen käyttöönotto, tietokantatestauksen opiskelua|
-
+|7.4.2019   |1  |Bugien korjausta |
 Yhteensä 21 tuntia
