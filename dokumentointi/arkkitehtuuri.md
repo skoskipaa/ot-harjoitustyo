@@ -1,4 +1,4 @@
 Pakkauskaavio
 
 
-[embed]https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kuvat/pakkauskaavio.pdf [/embed]
+<img source="https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kuvat/pakkauskaavio.pdf" width=400>
