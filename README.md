@@ -9,6 +9,8 @@ Sovellus käyttää h2-tietokannanhallintajärjestelmää ja sen tietokanta sija
 
 [Vaatimusmäärittely](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)
 
+[Arkkitehtuurikuvaus](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
+
 
 ## Komentorivitoiminnot
 
