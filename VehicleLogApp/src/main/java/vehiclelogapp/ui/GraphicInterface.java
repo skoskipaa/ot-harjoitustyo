@@ -1,5 +1,7 @@
 package vehiclelogapp.ui;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -49,15 +51,19 @@ public class GraphicInterface extends Application {
         Label greetingText = new Label("Tervetuloa! Anna rekisteritunnus ja valitse toiminto");
         Label errorMessageMain = new Label();
 
+        // väliaikainen nappi tietokannan alustukseen...
+        Button setUpDbBtn = new Button("Alusta tietokanta (väliaikainen nappi testaukseen)");
+
         VBox welcome = new VBox();
         welcome.getChildren().add(greetingText);
         welcome.getChildren().add(licensePlate);
         welcome.getChildren().add(errorMessageMain);
         welcome.getChildren().add(vehicleButton);
         welcome.getChildren().add(entryButton);
-        welcome.getChildren().add(listVehiclesBtn);
         welcome.getChildren().add(listEntriesBtn);
+        welcome.getChildren().add(listVehiclesBtn);
         welcome.getChildren().add(exit);
+        welcome.getChildren().add(setUpDbBtn);
         welcome.setPrefSize(500, 300);
         welcome.setPadding(new Insets(20, 20, 20, 20));
         welcome.setSpacing(20);
@@ -126,12 +132,18 @@ public class GraphicInterface extends Application {
         ObservableList<String> data = FXCollections.observableArrayList();
 
         // buttons + actions
+        //VÄLIAIKAINEN ALUSTUSNAPPI
+        setUpDbBtn.setOnAction(event -> {
+            setUpDatabase();
+        });
+
         // siirry auton lisäysnäkymään
         vehicleButton.setOnAction(event -> {
             try {
                 lpText = licensePlate.getText();
-
-                if (service.vehicleExists(lpText)) {
+                if (isNotValid(lpText)) {
+                    errorMessageMain.setText("Anna tunnus!");
+                } else if (service.vehicleExists(lpText)) {
                     errorMessageMain.setText("Tunnuksella löytyy jo ajoneuvo!");
                 } else {
                     licensePlate.clear();
@@ -253,10 +265,10 @@ public class GraphicInterface extends Application {
 
                 try {
                     int odomCurrent = Integer.parseInt(currentOdometer);
-                    if (odomCurrent < service.getLatestOdometer(lpText)) { 
+                    if (odomCurrent < service.getLatestOdometer(lpText)) {
                         errorMsgEntryScene.setText("Matkamittarin lukema on liian pieni!");
                     } else {
-                        
+
                         service.addEntry(lpText, odomCurrent, driverName, typeOfJourney);
                         km.clear();
                         dr.clear();
@@ -276,7 +288,7 @@ public class GraphicInterface extends Application {
             ty.clear();
             stage.setScene(mainScene);
         });
-        
+
         // start
         stage.setScene(mainScene);
         stage.setTitle("LogBookApp");
@@ -285,7 +297,6 @@ public class GraphicInterface extends Application {
     }
 
     // Santa's little helpers...
-    
     public static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
@@ -295,6 +306,26 @@ public class GraphicInterface extends Application {
             return false;
         }
         return true;
+    }
+
+    public static boolean isNotValid(String lplate) {
+        return (lplate.isEmpty() || lplate.equals(" "));
+    }
+
+    private static void setUpDatabase() {
+
+        try (Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "")) {
+
+            conn.prepareStatement("DROP TABLE Vehicle IF EXISTS;").executeUpdate();
+            conn.prepareStatement("DROP TABLE Entry IF EXISTS;").executeUpdate();
+
+            conn.prepareStatement("CREATE TABLE Vehicle(id integer auto_increment primary key, plate varchar(30), odometer integer);").executeUpdate();
+            conn.prepareStatement("CREATE TABLE Entry(id integer auto_increment primary key, vehicle_id integer, date timestamp(0), "
+                    + "odometerread integer, driver varchar(30), type varchar(50), foreign key (vehicle_id) REFERENCES Vehicle(id));").executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage() + " " + e.getSQLState());
+        }
     }
 
 }

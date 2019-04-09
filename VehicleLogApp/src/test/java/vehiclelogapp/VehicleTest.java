@@ -66,8 +66,5 @@ public class VehicleTest {
         assertEquals(14000, vehicle2.getKilometers());
     }
     
-//    @Test
-//    public void toStringWorks() {
-//       
-//    }
+
 }

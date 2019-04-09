@@ -4,10 +4,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import jdk.nashorn.internal.runtime.regexp.joni.EncodingHelper;
 import vehiclelogapp.dao.EntryDao;
 import vehiclelogapp.dao.VehicleDao;
 
@@ -23,8 +19,6 @@ public class VehicleLogService {
 
     }
     
-    // Auton olemassaolon yhteydessä
-    // palautetaan viimeisin lukema -> ????????
 
     public boolean addVehicle(String licensePlate, int kilometers) throws SQLException {
         licensePlate = licensePlate.toUpperCase().trim();

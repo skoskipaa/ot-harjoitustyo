@@ -43,5 +43,51 @@ public class EntryTest {
         assertEquals(2, entry3.getId());
     }
     
+    @Test
+    public void getVehicleId() {
+        Integer res = 1;
+        assertEquals(res, entry2.getVehicleId());
+    }
+    
+    @Test
+    public void setVehicleId() {
+        entry.setVehicleId(3);
+        Integer res = 3;
+        assertEquals(res, entry.getVehicleId());
+    }
+    
+    @Test
+    public void getOdometer() {
+        assertEquals(13500, entry3.getOdometer());
+    }
+    
+    @Test
+    public void setOdometer() {
+        entry3.setOdometer(14000);
+        assertEquals(14000, entry3.getOdometer());
+    }
+    
+    @Test
+    public void getDriverOk() {
+        String res = entry3.getDriver();
+        assertEquals("Jukka", res);
+    }
+    
+    @Test
+    public void setDriverOk() {
+        entry.setDriver("Pirjo");
+        assertEquals("Pirjo", entry.getDriver());
+    }
+    
+    @Test
+    public void entryType() {
+        entry.setEntryType("Huolto");
+        assertEquals("Huolto", entry.getEntryType());
+    }
+    
+    @Test
+    public void getEntryType() {
+        assertEquals("Kuljetus", entry2.getEntryType());
+    }
     
 }

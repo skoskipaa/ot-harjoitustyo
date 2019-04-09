@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import vehiclelogapp.domain.Entry;
-import vehiclelogapp.domain.Vehicle;
 
 public class EntryDao implements Dao<Entry, Integer> {
 
