@@ -13,4 +13,5 @@
 |7.4.2019   |1  |Bugien korjausta |
 |9.4.2019   |1  |Arkkitehtuurikuvaus|
 |9.4.2019   |2.5|Tekstikäyttöliittymän muokkausta, testauksen suunnittelua/testien kirjoitusta| 
+
 Yhteensä 25.5 tuntia
