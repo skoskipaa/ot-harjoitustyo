@@ -9,6 +9,7 @@ Sovellus käyttää h2-tietokannanhallintajärjestelmää ja sen tietokanta sija
 
 [Vaatimusmäärittely](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)
 
+
 ## Komentorivitoiminnot
 
 Testit voidaan ajaa komennolla
@@ -16,6 +17,9 @@ Testit voidaan ajaa komennolla
 
 Testikattavuusraportti on mahdollista luoda komennolla
 *mvn test jacoco:report*
+
+Checkstyle voidaan suorittaa komennolla
+*mvn jxr:jxr checkstyle:checkstyle*
 
 Ohjelma voidaan suorittaa komentoriviltä komennolla
 *mvn compile exec:java -Dexec.mainClass=vehiclelogapp.ui.Main*
