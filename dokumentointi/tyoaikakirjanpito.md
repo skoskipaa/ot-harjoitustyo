@@ -11,4 +11,6 @@
 |6.4.2019   |3  |Toiminnallisuuden siirto graafiseen käyttöliittymään|
 |6.4.2019   |2  |Checkstylen käyttöönotto, tietokantatestauksen opiskelua|
 |7.4.2019   |1  |Bugien korjausta |
-Yhteensä 22 tuntia
+|9.4.2019   |1  |Arkkitehtuurikuvaus|
+|9.4.2019   |2.5|Tekstikäyttöliittymän muokkausta, testauksen suunnittelua/testien kirjoitusta| 
+Yhteensä 25.5 tuntia
