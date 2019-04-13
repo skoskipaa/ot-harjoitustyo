@@ -14,5 +14,5 @@
 |9.4.2019   |1  |Arkkitehtuurikuvaus|
 |9.4.2019   |2.5|Käyttöliittymän muokkausta, testauksen suunnittelua/testien kirjoitusta| 
 |11.4.2019  |2.5|Testien kirjoitusta  |
-
-Yhteensä 28 tuntia
+|12.4.2019  |3  |Käyttöliittymän uudistus |
+Yhteensä 31 tuntia
