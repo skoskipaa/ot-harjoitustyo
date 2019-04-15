@@ -7,15 +7,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import vehiclelogapp.domain.Entry;
 
 public class EntryDao implements Dao<Entry, Integer> {
+    
+    private String databaseUrl;
+    
+
+    public EntryDao(String databaseUrl) {
+        this.databaseUrl = databaseUrl;
+    }
+    
+    
 
     @Override
     public Entry create(Entry entry) throws SQLException {
 
-        Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "");
+        Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Entry (vehicle_id, date, odometerread, driver, type)"
                 + " VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
         stmt.setInt(1, entry.getVehicleId());
@@ -40,7 +48,7 @@ public class EntryDao implements Dao<Entry, Integer> {
     @Override
     public Entry read(Integer key) throws SQLException {
 
-        Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "");
+        Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Entry WHERE id = ?");
         stmt.setInt(1, key);
         ResultSet rs = stmt.executeQuery();
@@ -58,20 +66,11 @@ public class EntryDao implements Dao<Entry, Integer> {
 
     }
 
-    @Override
-    public Entry update(Entry object) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void delete(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+   
     @Override
     public ArrayList<Entry> list() throws SQLException {
 
-        Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "");
+        Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Entry");
         ResultSet rs = stmt.executeQuery();
 
@@ -90,7 +89,7 @@ public class EntryDao implements Dao<Entry, Integer> {
 
     public ArrayList<Entry> listEntriesForVehicle(Integer vehicleId) throws SQLException {
 
-        Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "");
+        Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Entry WHERE vehicle_id = ?");
         stmt.setInt(1, vehicleId);
         ResultSet rs = stmt.executeQuery();
@@ -110,7 +109,7 @@ public class EntryDao implements Dao<Entry, Integer> {
     
     public int latestOdometerForVehicle(Integer vehicleId) throws SQLException {
         
-        Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "");
+        Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Entry WHERE vehicle_id = ? "
                 + "ORDER BY date DESC");
         stmt.setInt(1, vehicleId);

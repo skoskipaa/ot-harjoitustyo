@@ -13,10 +13,20 @@ import vehiclelogapp.domain.Vehicle;
 
 
 public class VehicleDao implements Dao<Vehicle, Integer> {
+    private String databaseUrl;
+    
+    
+
+    public VehicleDao(String database) {
+        this.databaseUrl = database;
+    }
+    
+    
+    
 
     @Override
     public Vehicle create(Vehicle vehicle) throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "");
+        Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Vehicle (plate, odometer) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
         stmt.setString(1, vehicle.getLicensePlate());
         stmt.setInt(2, vehicle.getKilometers());
@@ -38,7 +48,7 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
 
     @Override
     public Vehicle read(Integer key) throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "");
+        Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Vehicle WHERE id = ?");
         stmt.setInt(1, key);
         ResultSet rs = stmt.executeQuery();
@@ -55,20 +65,11 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
         
     }
 
-    @Override
-    public Vehicle update(Vehicle vehicle) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void delete(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public ArrayList<Vehicle> list() throws SQLException {
         
-        Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "");
+        Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Vehicle");
         ResultSet rs = stmt.executeQuery();
         
@@ -86,7 +87,7 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
     }
     
     public Integer getVehicleId(String licensePlate) throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "");
+        Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
         PreparedStatement stmt = conn.prepareStatement("SELECT id FROM Vehicle WHERE plate = ?");
                 
         stmt.setString(1, licensePlate);

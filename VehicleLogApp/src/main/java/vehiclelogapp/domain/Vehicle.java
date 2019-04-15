@@ -48,7 +48,7 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return licensePlate + ", matkamittarin ensimmäinen lukema: " + kilometers;
+        return licensePlate; // + ", matkamittarin ensimmäinen lukema: " + kilometers;
     }
 
 }

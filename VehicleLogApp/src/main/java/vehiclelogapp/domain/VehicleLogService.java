@@ -11,12 +11,21 @@ public class VehicleLogService {
 
     private VehicleDao vehicleDao;
     private EntryDao entryDao;
+    private String database;
 
     public VehicleLogService() {
 
-        this.vehicleDao = new VehicleDao();
-        this.entryDao = new EntryDao();
-
+        this.vehicleDao = new VehicleDao("jdbc:h2:./logbook");
+        this.entryDao = new EntryDao("jdbc:h2:./logbook");
+        
+    }
+    // Toinen konstruktori testausta varten
+    public VehicleLogService(String database) {
+        
+        this.database = database;
+        this.entryDao = new EntryDao(database);
+        this.vehicleDao = new VehicleDao(database);
+        
     }
     
 
@@ -37,7 +46,7 @@ public class VehicleLogService {
     }
 
     public boolean addEntry(String licensePlate, int km, String driver, String entryType) throws SQLException {
-        Timestamp date = Timestamp.valueOf(LocalDateTime.now());
+        Timestamp date = Timestamp.valueOf(LocalDateTime.now()); /////Tarkista validi syöte//////
         licensePlate = licensePlate.toUpperCase().trim();
 
         Integer vehicleId = vehicleDao.getVehicleId(licensePlate);

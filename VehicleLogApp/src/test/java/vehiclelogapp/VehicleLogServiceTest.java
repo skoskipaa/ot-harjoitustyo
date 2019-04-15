@@ -3,31 +3,22 @@ package vehiclelogapp;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import org.junit.After;
-import org.junit.AfterClass;
+import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import vehiclelogapp.dao.EntryDao;
-import vehiclelogapp.dao.VehicleDao;
 import vehiclelogapp.domain.VehicleLogService;
 
-// Muokkaa daoa? Tietokantayhteyden muodostus jonnekin muualle?
-
 public class VehicleLogServiceTest {
-    
-    private Connection conn;
-    VehicleLogService testService;
-    private VehicleDao testVehicleDao;
-    private EntryDao testEntryDao;
-    
 
-    @Before
-    public void setUpDatabase() {
+    static Connection conn;
+    private VehicleLogService testService;
+    
+    
+    @BeforeClass
+    public static void setUp() {
         
-       
-
         try (Connection conn = DriverManager.getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "sa", "")) {
 
             conn.prepareStatement("DROP TABLE Vehicle IF EXISTS;").executeUpdate();
@@ -41,16 +32,64 @@ public class VehicleLogServiceTest {
             System.out.println("Error: " + e.getMessage() + " " + e.getSQLState());
 
         }
+    }
 
+    @Before
+    public void conn() {
+        testService = new VehicleLogService("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
+    }
+
+    @Test
+    public void addVehicleToDatabase() throws SQLException {
+        assertTrue(testService.addVehicle("HII51", 15000));
     }
     
-   
+    @Test
+    public void addExistingVehicleToDatabaseNotPossible() throws SQLException {
+        testService.addVehicle("ABC123", 1);
+        assertFalse(testService.addVehicle("ABC123", 500));
+    }
 
-    @After
-    public void tearDown() throws SQLException {
+    @Test
+    public void listVehiclesNotNull() throws SQLException {
+        testService.addVehicle("HIH111", 1100);
+        ArrayList<String> list = testService.listVehicles();
+        assertTrue(!list.isEmpty());
+    }
+    
+    @Test
+    public void vehicleExists() throws SQLException {
+        assertFalse(testService.vehicleExists("AAA111"));
+    }
+    
+    @Test
+    public void vehicleExistsTrue() throws SQLException {
+        testService.addVehicle("ELV15", 1977);
+        assertTrue(testService.vehicleExists("ELV15"));
+    }
+    
+    @Test
+    public void lastOdometerCorrect() throws SQLException {
+        testService.addVehicle("A4", 0);
+        testService.addEntry("A4", 15, "MrX", "Kuljetus");
+        assertEquals(15, testService.getLatestOdometer("A4"));
+    }
+    
+    @Test
+    public void addEntryOk() throws SQLException {
+        testService.addVehicle("HJK99", 0);
+        assertTrue(testService.addEntry("HJK99", 2400, "Jaska", "huolto"));
         
-        conn.close();
+    }
+    
+    @Test
+    public void listEntriesOk() throws SQLException {
+        testService.addVehicle("PIP0", 1);
+        testService.addEntry("PIP0", 15, "Jonne", "turha");
+        ArrayList<String> res = testService.listEntriesForVehicle("PIP0");
+        assertTrue(!res.isEmpty());
     }
 
-    
+
+
 }

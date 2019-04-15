@@ -9,176 +9,194 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import vehiclelogapp.domain.VehicleLogService;
 
 public class GraphicInterface extends Application {
 
+    private VehicleLogService service;
     private Scene mainScene;
     private Scene addVehicle;
     private Scene addEntry;
     private Scene listEntries;
-    private VehicleLogService service;
-    private String lpText;
+    private String chooseVehicleEntry;
+    private ObservableList<String> vehiclesMenuItems;
 
     @Override
     public void init() {
         service = new VehicleLogService();
+        vehiclesMenuItems = FXCollections.observableArrayList();
+        setUpDatabase();
 
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
-        // main scene components
-        TextField licensePlate = new TextField();
-        licensePlate.setMaxWidth(150);
-        Button vehicleButton = new Button("Lisää ajoneuvo");
-        Button entryButton = new Button("Lisää tapahtuma");
-        Button listVehiclesBtn = new Button("Listaa kaikki ajoneuvot");
-        Button listEntriesBtn = new Button("Listaa ajoneuvon tapahtumat");
-        Button exit = new Button("Lopeta");
-        Label greetingText = new Label("Tervetuloa! Anna rekisteritunnus ja valitse toiminto");
-        Label errorMessageMain = new Label();
+    public void start(Stage primaryStage) throws Exception {
 
-        // väliaikainen nappi tietokannan alustukseen...
-        Button setUpDbBtn = new Button("Alusta tietokanta (väliaikainen nappi testaukseen)");
+        // Valikot
+        //ObservableList<String> vehiclesMenuItems = FXCollections.observableArrayList();
+        ComboBox cBVehicleMenu = new ComboBox();
+        cBVehicleMenu.setVisibleRowCount(5);
+        cBVehicleMenu.setPromptText("Ajoneuvo");
+        ComboBox cBEntryMenu = new ComboBox();
+        cBEntryMenu.setVisibleRowCount(5);
+        cBEntryMenu.setPromptText("Ajoneuvo");
 
-        VBox welcome = new VBox();
-        welcome.getChildren().add(greetingText);
-        welcome.getChildren().add(licensePlate);
-        welcome.getChildren().add(errorMessageMain);
-        welcome.getChildren().add(vehicleButton);
-        welcome.getChildren().add(entryButton);
-        welcome.getChildren().add(listEntriesBtn);
-        welcome.getChildren().add(listVehiclesBtn);
-        welcome.getChildren().add(exit);
-        welcome.getChildren().add(setUpDbBtn);
-        welcome.setPrefSize(500, 300);
-        welcome.setPadding(new Insets(20, 20, 20, 20));
-        welcome.setSpacing(20);
-        welcome.setAlignment(Pos.CENTER);
-        mainScene = new Scene(welcome);
+        setMenus();
 
-        // "add vehicle" scene components               
-        Label plate = new Label();
-        Label odometer = new Label("Anna matkamittarin aloituslukema");
-        TextField odoField = new TextField();
-        odoField.setMaxWidth(150);
-        Label errorMsgVehicleScene = new Label();
-        Button submitVehicle = new Button("Lisää ajoneuvo järjestelmään");
-        Button btnCancelVehicle = new Button("Cancel");
+        cBVehicleMenu.setItems(vehiclesMenuItems);
+        cBEntryMenu.setItems(vehiclesMenuItems);
 
-        VBox vehicle = new VBox();
-        vehicle.getChildren().add(plate);
-        vehicle.getChildren().add(odometer);
-        vehicle.getChildren().add(odoField);
-        vehicle.getChildren().add(errorMsgVehicleScene);
-        vehicle.getChildren().add(submitVehicle);
-        vehicle.getChildren().add(btnCancelVehicle);
-        vehicle.setPrefSize(500, 300);
-        vehicle.setPadding(new Insets(20, 20, 20, 20));
-        vehicle.setSpacing(20);
-        vehicle.setAlignment(Pos.CENTER);
-        addVehicle = new Scene(vehicle);
+        // Aloitusnäkymän komponentit
+        Button addVehicleBtn = new Button("Lisää ajoneuvo");
+        Button addEntryBtn = new Button("Lisää tapahtuma");
+        Button listVehiclesBtnMain = new Button("Listaa kaikki ajoneuvot");
+        Button listEntriesBtnMain = new Button("Listaa ajoneuvon tapahtumat");
+        Button exitBtn = new Button("Lopeta");
+        Label greetingText = new Label("Tervetuloa! Valitse toiminto!");
 
-        // "add entry" scene components
-        Label msg = new Label();
-        Label kilometers = new Label("Anna matkamittarin lukema");
-        TextField km = new TextField();
-        km.setMaxWidth(150);
-        Label driver = new Label("Anna kuljettajan nimi");
-        TextField dr = new TextField();
-        dr.setMaxWidth(150);
-        Label type = new Label("Anna selite tai asiakas");
-        TextField ty = new TextField();
-        Label errorMsgEntryScene = new Label();
-        Button submitEntry = new Button("Tallenna");
-        Button btnCancelEntry = new Button("Cancel");
+        // Ajoneuvosyötön komponentit
+        Label plateLbl = new Label("Anna rekisteritunnus");
+        TextField plateField = new TextField();
+        plateField.setMaxWidth(150);
+        Label odometerLbl = new Label("Anna matkamittarin aloituslukema");
+        TextField odoFieldVehicleScene = new TextField();
+        odoFieldVehicleScene.setMaxWidth(150);
+        Label errorMsg = new Label();
+        Button submitVehicleBtn = new Button("Lisää ajoneuvo järjestelmään");
+        Button cancelVehicleBtn = new Button("Cancel");
 
-        VBox entry = new VBox();
-        entry.getChildren().add(msg);
-        entry.getChildren().add(kilometers);
-        entry.getChildren().add(km);
-        entry.getChildren().add(driver);
-        entry.getChildren().add(dr);
-        entry.getChildren().add(type);
-        entry.getChildren().add(ty);
-        entry.getChildren().add(errorMsgEntryScene);
-        entry.getChildren().add(submitEntry);
-        entry.getChildren().add(btnCancelEntry);
-        entry.setPrefSize(500, 300);
-        entry.setPadding(new Insets(20, 20, 20, 20));
-        entry.setSpacing(20);
-        entry.setAlignment(Pos.CENTER);
-        addEntry = new Scene(entry);
+        // Tapahtumasyötön komponentit
+        Label msg = new Label();        // Edelliset kilometrit, rekkari
+        Label kmLbl = new Label("Anna matkamittarin lukema");
+        TextField odoFieldEntryScene = new TextField();
+        odoFieldEntryScene.setMinWidth(300);
+        Label driverLbl = new Label("Anna kuljettajan nimi");
+        TextField driverField = new TextField();
+        driverField.setMinWidth(300);
+        Label typeLbl = new Label("Anna selite tai asiakas");
+        TextField typeField = new TextField();
+        typeField.setMinWidth(300);
+        Button submitEntryBtn = new Button("Tallenna");
+        Button cancelEntryBtn = new Button("Cancel");
+        Button selectVehicleForEntry = new Button("Näytä ajoneuvon tiedot");
 
-        // secondary (query result) window components
+        // Päänäkymä
+        BorderPane mainLayout = new BorderPane();
+        HBox btnsMainBox = new HBox();
+        btnsMainBox.setPadding(new Insets(20, 20, 20, 20));
+        btnsMainBox.setSpacing(20);
+        HBox listAndChoiceBox = new HBox();
+        listAndChoiceBox.setPadding(new Insets(20, 20, 20, 20));
+        listAndChoiceBox.setSpacing(5);
+        HBox quitBox = new HBox();
+        quitBox.setPadding(new Insets(20, 20, 20, 20));
+
+        btnsMainBox.getChildren().addAll(addVehicleBtn, addEntryBtn, listVehiclesBtnMain);
+        listAndChoiceBox.getChildren().addAll(listEntriesBtnMain, cBVehicleMenu);
+        quitBox.getChildren().add(exitBtn);
+
+        mainLayout.setTop(btnsMainBox);
+        mainLayout.setCenter(listAndChoiceBox);
+        mainLayout.setBottom(quitBox);
+        mainLayout.setPadding(new Insets(20, 20, 20, 20));
+        
+        Scene mainScene = new Scene(mainLayout);
+        
+
+        // Auton syöttö
+        GridPane addVehicle = new GridPane();
+        addVehicle.add(plateLbl, 0, 0);
+        addVehicle.add(plateField, 1, 0);
+        addVehicle.add(odometerLbl, 0, 1);
+        addVehicle.add(odoFieldVehicleScene, 1, 1);
+        addVehicle.add(submitVehicleBtn, 0, 2);
+        addVehicle.add(cancelVehicleBtn, 1, 2);
+        addVehicle.add(errorMsg, 0, 3);
+        addVehicle.setPrefSize(400, 200);
+        addVehicle.setPadding(new Insets(20, 20, 20, 20));
+        addVehicle.setVgap(10);
+        addVehicle.setHgap(10);
+        Scene vehicleScene = new Scene(addVehicle);
+
+        // Tapahtuman syöttö
+        GridPane addEntry = new GridPane();
+        addEntry.add(cBEntryMenu, 0, 0);
+        addEntry.add(selectVehicleForEntry, 1, 0);
+        addEntry.add(msg, 1, 1);
+        addEntry.add(kmLbl, 0, 2);
+        addEntry.add(odoFieldEntryScene, 1, 2);
+        addEntry.add(driverLbl, 0, 3);
+        addEntry.add(driverField, 1, 3);
+        addEntry.add(typeLbl, 0, 4);
+        addEntry.add(typeField, 1, 4);
+        addEntry.add(submitEntryBtn, 0, 5);
+        addEntry.add(cancelEntryBtn, 1, 5);
+        addEntry.setPrefSize(600, 200);
+        addEntry.setPadding(new Insets(20, 20, 20, 20));
+        addEntry.setVgap(10);
+        addEntry.setHgap(10);
+        Scene entryScene = new Scene(addEntry);
+
+        // Ikkuna listausten näyttöön
         StackPane resultWndwLayout = new StackPane();
         ListView<String> list = new ListView<>();
         resultWndwLayout.getChildren().addAll(list);
-        Scene scndWndw = new Scene(resultWndwLayout, 600, 200);
+        Scene secondWndwScene = new Scene(resultWndwLayout, 600, 200);
         Stage resultWindow = new Stage();
         ObservableList<String> data = FXCollections.observableArrayList();
 
-        // buttons + actions
-        //VÄLIAIKAINEN ALUSTUSNAPPI
-        setUpDbBtn.setOnAction(event -> {
-            setUpDatabase();
+        // Lopetusnappi
+        exitBtn.setOnAction(event -> {
+            primaryStage.close();
+            resultWindow.close();
+
         });
 
-        // siirry auton lisäysnäkymään
-        vehicleButton.setOnAction(event -> {
-            try {
-                lpText = licensePlate.getText();
-                if (isNotValid(lpText)) {
-                    errorMessageMain.setText("Anna tunnus!");
-                } else if (service.vehicleExists(lpText)) {
-                    errorMessageMain.setText("Tunnuksella löytyy jo ajoneuvo!");
-                } else {
-                    licensePlate.clear();
-                    errorMessageMain.setText("");
-                    plate.setText("Ajoneuvo: " + lpText);
-                    stage.setScene(addVehicle);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        // Autonlisäysnäkymään-nappi
+        addVehicleBtn.setOnAction(event -> {
+            primaryStage.setScene(vehicleScene);
+
         });
 
-        // siirry tapahtuman lisäysnäkymään
-        entryButton.setOnAction(event -> {
-            try {
-                lpText = licensePlate.getText();
-                int reading = service.getLatestOdometer(lpText);
-                if (reading == 0) {
-                    errorMessageMain.setText("Autoa ei löydy!");
-                } else {
+        // Tapahtumanlisäysnäkymään-nappi
+        addEntryBtn.setOnAction(event -> {
+            primaryStage.setScene(entryScene);
 
-                    licensePlate.clear();
-                    errorMessageMain.setText("");
-                    String odo = Integer.toString(reading);
-                    msg.setText("Ajoneuvo: " + lpText.toUpperCase() + ", matkamittarin edellinen lukema: " + odo);
-
-                    stage.setScene(addEntry);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
-            }
         });
 
-        // listaa autot (uuteen ikkunaan)
-        listVehiclesBtn.setOnAction(event -> {
+        // Peru auton lisäys -nappi
+        cancelVehicleBtn.setOnAction(event -> {
+            plateField.clear();
+            odoFieldVehicleScene.clear();
+            primaryStage.setScene(mainScene);
+        });
+
+        // Peru tapahtuman lisäys -nappi
+        cancelEntryBtn.setOnAction(event -> {
+            msg.setText("");
+            odoFieldEntryScene.clear();
+            typeField.clear();
+            driverField.clear();
+            primaryStage.setScene(mainScene);
+        });
+
+        // Kaikkien autojen listaus (uudessa ikkunassa)
+        listVehiclesBtnMain.setOnAction(event -> {
             try {
 
                 data.clear();
@@ -188,30 +206,27 @@ public class GraphicInterface extends Application {
                 });
                 list.setItems(data);
                 resultWindow.setTitle("Ajoneuvot");
-                resultWindow.setScene(scndWndw);
+                resultWindow.setScene(secondWndwScene);
                 resultWindow.show();
             } catch (SQLException ex) {
                 Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
 
-        // listaa auton tapahtumat (uuteen ikkunaan)
-        listEntriesBtn.setOnAction(event -> {
+        // Valitun auton tapahtumien listaus
+        listEntriesBtnMain.setOnAction(event -> {
             try {
-                String lp = licensePlate.getText();
-                ArrayList<String> entryQuery = service.listEntriesForVehicle(lp);
+                String lp = (String) cBVehicleMenu.getValue();
+                if (lp != null) {
 
-                if (entryQuery == null) {
-                    errorMessageMain.setText("Autoa ei löydy!");
-                } else {
+                    ArrayList<String> entryQuery = service.listEntriesForVehicle(lp);
                     data.clear();
-                    errorMessageMain.setText("");
                     entryQuery.forEach((s) -> {
                         data.add(s);
                     });
                     list.setItems(data);
-                    resultWindow.setTitle(licensePlate.getText().toUpperCase());
-                    resultWindow.setScene(scndWndw);
+                    resultWindow.setTitle(lp);
+                    resultWindow.setScene(secondWndwScene);
                     resultWindow.show();
                 }
             } catch (SQLException ex) {
@@ -219,80 +234,92 @@ public class GraphicInterface extends Application {
             }
         });
 
-        // lopeta
-        exit.setOnAction(event -> {
-            resultWindow.close();
-            stage.close();
-        });
-
-        // lisää auto tietokantaan              
-        submitVehicle.setOnAction(event -> {
+        // Ajoneuvon syöttö
+        submitVehicleBtn.setOnAction(event -> {
             try {
-                String odometerField = odoField.getText();
-                if (!isInteger(odometerField)) {
-                    errorMsgVehicleScene.setText("Tarkista numero!");
+                String lp = plateField.getText();
+                String setOdo = odoFieldVehicleScene.getText();
+
+                if (service.vehicleExists(lp)) {
+                    errorMsg.setText("Tunnuksella löytyy jo ajoneuvo!");
+                } else if (!isInteger(setOdo)) {
+                    errorMsg.setText("Tarkista matkamittarin lukema!");
                 } else {
-                    int odom = Integer.parseInt(odometerField);
-                    boolean addToDatabase = service.addVehicle(lpText, odom);
-                    if (!addToDatabase) {
-                        errorMsgVehicleScene.setText("Lisäys epäonnistui, tarkista tiedot");
-                    } else {
-                        service.addEntry(lpText, odom, "admin", "aloitussyöttö");
-                        odoField.clear();
-                        errorMsgVehicleScene.setText("");
-                        stage.setScene(mainScene);
-                    }
+                    int km = Integer.parseInt(setOdo);
+                    service.addVehicle(lp, km);
+                    service.addEntry(lp, km, "admin", "aloitussyöttö");
+                    plateField.clear();
+                    odoFieldVehicleScene.clear();
+                    setMenus();
+                    cBVehicleMenu.setItems(vehiclesMenuItems);
+                    cBEntryMenu.setItems(vehiclesMenuItems);
+                    primaryStage.setScene(mainScene);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
             }
-        });
-        // peru ajoneuvon lisäys
-        btnCancelVehicle.setOnAction(event -> {
-            odoField.clear();
-            stage.setScene(mainScene);
+
         });
 
-        // lisää tapahtuma tietokantaan         
-        submitEntry.setOnAction(event -> {
-            String currentOdometer = km.getText();
-            String driverName = dr.getText();
-            String typeOfJourney = ty.getText();
-
-            if (!isInteger(currentOdometer)) {
-                errorMsgEntryScene.setText("Tarkista matkamittarin lukema!");
-            } else {
+        // Tapahtuman syöttö
+        // Valitse-nappi ja kilsojen näyttö
+        selectVehicleForEntry.setOnAction(event -> {
+            String vehicleToGet = (String) cBEntryMenu.getValue();
+            int read = 0;
+            if (vehicleToGet != null) {
 
                 try {
-                    int odomCurrent = Integer.parseInt(currentOdometer);
-                    if (odomCurrent < service.getLatestOdometer(lpText)) {
-                        errorMsgEntryScene.setText("Matkamittarin lukema on liian pieni!");
-                    } else {
-
-                        service.addEntry(lpText, odomCurrent, driverName, typeOfJourney);
-                        km.clear();
-                        dr.clear();
-                        ty.clear();
-                        stage.setScene(mainScene);
-                    }
+                    read = service.getLatestOdometer(vehicleToGet);
                 } catch (SQLException ex) {
                     Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                msg.setText(vehicleToGet + ": " + "Ed. lukema: " + read + " km");
             }
         });
 
-        // peru ajoneuvon lisäys
-        btnCancelEntry.setOnAction(event -> {
-            km.clear();
-            dr.clear();
-            ty.clear();
-            stage.setScene(mainScene);
+        // Submit -nappi -> tallennus (msg = virheviesti)
+        submitEntryBtn.setOnAction(event -> {
+            String veh = (String) cBEntryMenu.getValue();
+            String kmsAsString = odoFieldEntryScene.getText();
+            String dr = driverField.getText();
+            String tp = typeField.getText();
+            int lastOdoKm = 0;
+
+            if (veh != null) {
+            try {
+                lastOdoKm = service.getLatestOdometer(veh);
+            } catch (SQLException ex) {
+                Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+            
+            if ((veh == null) || (!isInteger(kmsAsString)) || (isNotValid(dr))
+                    || (isNotValid(tp))) {
+                msg.setText("Tarkista tiedot!");
+                
+            } else if (lastOdoKm > Integer.parseInt(kmsAsString)) {
+                msg.setText("Tarkista matkamittarin lukema!");
+
+            } else {
+                int km = Integer.parseInt(kmsAsString);
+                try {
+                    service.addEntry(veh, km, dr, tp);
+                    odoFieldEntryScene.clear();
+                    driverField.clear();
+                    typeField.clear();
+                    msg.setText("");
+                    primaryStage.setScene(mainScene);
+                } catch (SQLException ex) {
+                    Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
+            }
         });
 
-        // start
-        stage.setScene(mainScene);
-        stage.setTitle("LogBookApp");
-        stage.show();
+        // Aloitusnäkymän starttaus
+        primaryStage.setScene(mainScene);
+        primaryStage.setTitle("LogBookApp");
+        primaryStage.show();
 
     }
 
@@ -308,24 +335,32 @@ public class GraphicInterface extends Application {
         return true;
     }
 
-    public static boolean isNotValid(String lplate) {
-        return (lplate.isEmpty() || lplate.equals(" "));
+    public static boolean isNotValid(String s) {
+        return (s.isEmpty() || s.equals(" "));
     }
 
+    public void setMenus() throws SQLException {
+
+        ArrayList<String> carData = service.listVehicles();
+        for (String s : carData) {
+            vehiclesMenuItems.add(s);
+        }
+
+    }
+    
     private static void setUpDatabase() {
 
         try (Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "")) {
 
-            conn.prepareStatement("DROP TABLE Vehicle IF EXISTS;").executeUpdate();
-            conn.prepareStatement("DROP TABLE Entry IF EXISTS;").executeUpdate();
+//            conn.prepareStatement("DROP TABLE Vehicle IF EXISTS;").executeUpdate();
+//            conn.prepareStatement("DROP TABLE Entry IF EXISTS;").executeUpdate();
 
-            conn.prepareStatement("CREATE TABLE Vehicle(id integer auto_increment primary key, plate varchar(30), odometer integer);").executeUpdate();
-            conn.prepareStatement("CREATE TABLE Entry(id integer auto_increment primary key, vehicle_id integer, date timestamp(0), "
+            conn.prepareStatement("CREATE TABLE IF NOT EXISTS Vehicle(id integer auto_increment primary key, plate varchar(30), odometer integer);").executeUpdate();
+            conn.prepareStatement("CREATE TABLE IF NOT EXISTS Entry(id integer auto_increment primary key, vehicle_id integer, date timestamp(0), "
                     + "odometerread integer, driver varchar(30), type varchar(50), foreign key (vehicle_id) REFERENCES Vehicle(id));").executeUpdate();
 
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage() + " " + e.getSQLState());
         }
     }
-
 }
