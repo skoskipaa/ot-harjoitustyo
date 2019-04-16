@@ -14,10 +14,12 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -33,19 +35,19 @@ public class GraphicInterface extends Application {
     private Scene addEntry;
     private Scene listEntries;
     private String chooseVehicleEntry;
-    private ObservableList<String> vehiclesMenuItems;
+    private ObservableList<String> vehicleMenuItems;
 
     @Override
     public void init() throws FileNotFoundException, IOException {
-        
+
         Properties properties = new Properties();
         properties.load(new FileInputStream("config.properties"));
         String db = properties.getProperty("database");
         String user = properties.getProperty("user");
         String pw = properties.getProperty("password");
-        
+
         service = new VehicleLogService(db, user, pw);
-        vehiclesMenuItems = FXCollections.observableArrayList();
+        vehicleMenuItems = FXCollections.observableArrayList();
 
     }
 
@@ -59,10 +61,11 @@ public class GraphicInterface extends Application {
         ComboBox cBEntryMenu = new ComboBox();
         cBEntryMenu.setVisibleRowCount(5);
         cBEntryMenu.setPromptText("Ajoneuvo");
+        cBEntryMenu.setTooltip(new Tooltip("Valitse ajoneuvo"));
 
         setMenus();
-        cBVehicleMenu.setItems(vehiclesMenuItems);
-        cBEntryMenu.setItems(vehiclesMenuItems);
+        cBVehicleMenu.setItems(vehicleMenuItems);
+        cBEntryMenu.setItems(vehicleMenuItems);
 
         // Aloitusnäkymän komponentit
         Button addVehicleBtn = new Button("Lisää ajoneuvo");
@@ -85,18 +88,23 @@ public class GraphicInterface extends Application {
 
         // Tapahtumasyötön komponentit
         Label msg = new Label();
-        Label kmLbl = new Label("Anna matkamittarin lukema");
+        ChoiceBox chooseEntryTypeCb = new ChoiceBox(FXCollections.observableArrayList("AJO",
+                "HUOLTO", "TANKKAUS", "MUU"));
+        chooseEntryTypeCb.setValue("AJO");
+        chooseEntryTypeCb.setTooltip(new Tooltip("Tapahtuman tyyppi"));
+        Label kmLbl = new Label("Matkamittarin lukema:");
         TextField odoFieldEntryScene = new TextField();
-        odoFieldEntryScene.setMinWidth(300);
-        Label driverLbl = new Label("Anna kuljettajan nimi");
+        odoFieldEntryScene.setMinWidth(200);
+        Label driverLbl = new Label("Kuljettaja:");
         TextField driverField = new TextField();
         driverField.setMinWidth(300);
-        Label typeLbl = new Label("Anna selite tai asiakas");
+        Label typeLbl = new Label("Anna selite tai asiakas:");
         TextField typeField = new TextField();
-        typeField.setMinWidth(300);
+        kmLbl.setMinWidth(200);
+        typeField.setMinWidth(200);
         Button submitEntryBtn = new Button("Tallenna");
         Button cancelEntryBtn = new Button("Cancel");
-        Button selectVehicleForEntry = new Button("Näytä ajoneuvon tiedot");
+        Button selectVehicleForEntryBtn = new Button("Näytä ajoneuvon tiedot");
 
         // Päänäkymä
         BorderPane mainLayout = new BorderPane();
@@ -118,41 +126,42 @@ public class GraphicInterface extends Application {
         mainLayout.setBottom(quitBox);
         mainLayout.setPadding(new Insets(20, 20, 20, 20));
 
-        Scene mainScene = new Scene(mainLayout);
+        Scene startScene = new Scene(mainLayout);
 
         // Auton syöttö
-        GridPane addVehicle = new GridPane();
-        addVehicle.add(plateLbl, 0, 0);
-        addVehicle.add(plateField, 1, 0);
-        addVehicle.add(odometerLbl, 0, 1);
-        addVehicle.add(odoFieldVehicleScene, 1, 1);
-        addVehicle.add(submitVehicleBtn, 0, 2);
-        addVehicle.add(cancelVehicleBtn, 1, 2);
-        addVehicle.add(errorMsg, 0, 3);
-        addVehicle.setPrefSize(400, 200);
-        addVehicle.setPadding(new Insets(20, 20, 20, 20));
-        addVehicle.setVgap(10);
-        addVehicle.setHgap(10);
-        Scene vehicleScene = new Scene(addVehicle);
+        GridPane addNewVehicle = new GridPane();
+        addNewVehicle.add(plateLbl, 0, 0);
+        addNewVehicle.add(plateField, 1, 0);
+        addNewVehicle.add(odometerLbl, 0, 1);
+        addNewVehicle.add(odoFieldVehicleScene, 1, 1);
+        addNewVehicle.add(submitVehicleBtn, 0, 2);
+        addNewVehicle.add(cancelVehicleBtn, 1, 2);
+        addNewVehicle.add(errorMsg, 0, 3);
+        addNewVehicle.setPrefSize(400, 200);
+        addNewVehicle.setPadding(new Insets(20, 20, 20, 20));
+        addNewVehicle.setVgap(10);
+        addNewVehicle.setHgap(10);
+        Scene vehicleScene = new Scene(addNewVehicle);
 
         // Tapahtuman syöttö
-        GridPane addEntry = new GridPane();
-        addEntry.add(cBEntryMenu, 0, 0);
-        addEntry.add(selectVehicleForEntry, 1, 0);
-        addEntry.add(msg, 1, 1);
-        addEntry.add(kmLbl, 0, 2);
-        addEntry.add(odoFieldEntryScene, 1, 2);
-        addEntry.add(driverLbl, 0, 3);
-        addEntry.add(driverField, 1, 3);
-        addEntry.add(typeLbl, 0, 4);
-        addEntry.add(typeField, 1, 4);
-        addEntry.add(submitEntryBtn, 0, 5);
-        addEntry.add(cancelEntryBtn, 1, 5);
-        addEntry.setPrefSize(600, 200);
-        addEntry.setPadding(new Insets(20, 20, 20, 20));
-        addEntry.setVgap(10);
-        addEntry.setHgap(10);
-        Scene entryScene = new Scene(addEntry);
+        GridPane addNewEntry = new GridPane();
+        addNewEntry.add(cBEntryMenu, 0, 0);
+        addNewEntry.add(selectVehicleForEntryBtn, 1, 0);
+        addNewEntry.add(chooseEntryTypeCb, 2, 0);
+        addNewEntry.add(msg, 1, 1);
+        addNewEntry.add(kmLbl, 0, 2);
+        addNewEntry.add(odoFieldEntryScene, 1, 2);
+        addNewEntry.add(driverLbl, 0, 3);
+        addNewEntry.add(driverField, 1, 3);
+        addNewEntry.add(typeLbl, 0, 4);
+        addNewEntry.add(typeField, 1, 4);
+        addNewEntry.add(submitEntryBtn, 0, 5);
+        addNewEntry.add(cancelEntryBtn, 1, 5);
+        addNewEntry.setPrefSize(630, 200);
+        addNewEntry.setPadding(new Insets(20, 20, 20, 20));
+        addNewEntry.setVgap(10);
+        addNewEntry.setHgap(10);
+        Scene entryScene = new Scene(addNewEntry);
 
         // Ikkuna listausten näyttöön
         StackPane resultWndwLayout = new StackPane();
@@ -185,7 +194,7 @@ public class GraphicInterface extends Application {
         cancelVehicleBtn.setOnAction(event -> {
             plateField.clear();
             odoFieldVehicleScene.clear();
-            primaryStage.setScene(mainScene);
+            primaryStage.setScene(startScene);
         });
 
         // Peru tapahtuman lisäys -nappi
@@ -194,7 +203,7 @@ public class GraphicInterface extends Application {
             odoFieldEntryScene.clear();
             typeField.clear();
             driverField.clear();
-            primaryStage.setScene(mainScene);
+            primaryStage.setScene(startScene);
         });
 
         // Kaikkien autojen listaus (uudessa ikkunassa)
@@ -255,9 +264,9 @@ public class GraphicInterface extends Application {
                     odoFieldVehicleScene.clear();
                     errorMsg.setText("");
                     setMenus();
-                    cBVehicleMenu.setItems(vehiclesMenuItems);
-                    cBEntryMenu.setItems(vehiclesMenuItems);
-                    primaryStage.setScene(mainScene);
+                    cBVehicleMenu.setItems(vehicleMenuItems);
+                    cBEntryMenu.setItems(vehicleMenuItems);
+                    primaryStage.setScene(startScene);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
@@ -267,7 +276,7 @@ public class GraphicInterface extends Application {
 
         // Tapahtuman syöttö
         // Valitse-nappi ja kilsojen näyttö
-        selectVehicleForEntry.setOnAction(event -> {
+        selectVehicleForEntryBtn.setOnAction(event -> {
             String vehicleToGet = (String) cBEntryMenu.getValue();
             int read = 0;
             if (vehicleToGet != null) {
@@ -277,7 +286,7 @@ public class GraphicInterface extends Application {
                 } catch (SQLException ex) {
                     Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                msg.setText(vehicleToGet + ": " + "Ed. lukema: " + read + " km");
+                msg.setText(vehicleToGet + ": " + "Viimeisin lukema: " + read + " km");
             }
         });
 
@@ -299,7 +308,7 @@ public class GraphicInterface extends Application {
 
             if ((veh == null) || (!isInteger(kmsAsString)) || (isNotValid(dr))
                     || (isNotValid(tp))) {
-                msg.setText("Tarkista tiedot!");
+                msg.setText("Tarkista tiedot, älä jätä tyhjiä kenttiä!");
 
             } else if (lastOdoKm > Integer.parseInt(kmsAsString)) {
                 msg.setText("Tarkista matkamittarin lukema!");
@@ -307,12 +316,13 @@ public class GraphicInterface extends Application {
             } else {
                 int km = Integer.parseInt(kmsAsString);
                 try {
-                    service.addEntry(veh, km, dr, tp);
+                    String type = (String) chooseEntryTypeCb.getValue() + ": " + tp;
+                    service.addEntry(veh, km, dr, type);
                     odoFieldEntryScene.clear();
                     driverField.clear();
                     typeField.clear();
                     msg.setText("");
-                    primaryStage.setScene(mainScene);
+                    primaryStage.setScene(startScene);
                 } catch (SQLException ex) {
                     Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -321,7 +331,7 @@ public class GraphicInterface extends Application {
         });
 
         // Aloitusnäkymän starttaus
-        primaryStage.setScene(mainScene);
+        primaryStage.setScene(startScene);
         primaryStage.setTitle("LogBookApp");
         primaryStage.show();
 
@@ -345,8 +355,8 @@ public class GraphicInterface extends Application {
     public void setMenus() throws SQLException {
         ArrayList<String> carData = service.listVehicles();
         for (String s : carData) {
-            if (!vehiclesMenuItems.contains(s)) {
-                vehiclesMenuItems.add(s);
+            if (!vehicleMenuItems.contains(s)) {
+                vehicleMenuItems.add(s);
             }
         }
     }

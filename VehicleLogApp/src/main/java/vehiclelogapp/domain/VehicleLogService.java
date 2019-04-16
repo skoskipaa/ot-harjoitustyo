@@ -15,7 +15,6 @@ public class VehicleLogService {
     private EntryDao entryDao;
     private String database;
 
-
     public VehicleLogService(String database, String user, String pw) {
 
         this.database = database;
@@ -55,7 +54,8 @@ public class VehicleLogService {
         if (vehicleId == null) {
             return false;
         }
-        Entry entryToAdd = new Entry(vehicleId, km, date, driver, entryType);
+        String dr = driver.toUpperCase().trim();
+        Entry entryToAdd = new Entry(vehicleId, km, date, dr, entryType);
         Entry e = entryDao.create(entryToAdd);
 
         if (e == null) {

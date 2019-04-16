@@ -89,7 +89,7 @@ public class Entry {
 
     @Override
     public String toString() {
-        return time + ", " + odometer + ", " + driver + ", " + entryType;
+        return time + "\t\t" + odometer + "\t" + driver + "; " + entryType;
     }
 
 }
