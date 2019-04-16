@@ -15,42 +15,40 @@ public class VehicleLogService {
     private EntryDao entryDao;
     private String database;
 
-    public VehicleLogService() {
 
-        this.vehicleDao = new VehicleDao("jdbc:h2:./logbook");
-        this.entryDao = new EntryDao("jdbc:h2:./logbook");
-        setUpDatabase();
-        
-        
-    }
-    // Toinen konstruktori testausta varten
-    public VehicleLogService(String database) {
-        
+    public VehicleLogService(String database, String user, String pw) {
+
         this.database = database;
         this.entryDao = new EntryDao(database);
         this.vehicleDao = new VehicleDao(database);
-        
+        setUpDatabase(database, user, pw);
+
     }
-    
 
     public boolean addVehicle(String licensePlate, int kilometers) throws SQLException {
+        if (isNotValid(licensePlate)) {
+            return false;
+        }
         licensePlate = licensePlate.toUpperCase().trim();
-
         Integer key = vehicleDao.getVehicleId(licensePlate);
         if (key != null) {
             return false;
         }
-
         Vehicle vehicleToAdd = new Vehicle(licensePlate, kilometers);
         Vehicle v = vehicleDao.create(vehicleToAdd);
         if (v == null) {
             return false;
+        } else {
+            addEntry(licensePlate, kilometers, "admin", "aloitussyöttö");
         }
         return true;
     }
 
     public boolean addEntry(String licensePlate, int km, String driver, String entryType) throws SQLException {
-        Timestamp date = Timestamp.valueOf(LocalDateTime.now()); /////Tarkista validi syöte//////
+        if (isNotValid(licensePlate)) {
+            return false;
+        }
+        Timestamp date = Timestamp.valueOf(LocalDateTime.now());
         licensePlate = licensePlate.toUpperCase().trim();
 
         Integer vehicleId = vehicleDao.getVehicleId(licensePlate);
@@ -72,7 +70,7 @@ public class VehicleLogService {
         vehicles.forEach((v) -> {
             queryResults.add(v.toString());
         });
-        
+
         return queryResults;
     }
 
@@ -90,7 +88,7 @@ public class VehicleLogService {
         });
         return queryResults;
     }
-    
+
     public int getLatestOdometer(String licensePlate) throws SQLException {
         licensePlate = licensePlate.toUpperCase().trim();
         Integer vehicleId = vehicleDao.getVehicleId(licensePlate);
@@ -100,21 +98,21 @@ public class VehicleLogService {
         int result = entryDao.latestOdometerForVehicle(vehicleId);
         return result;
     }
-    
+
     public boolean vehicleExists(String licensePlate) throws SQLException {
         licensePlate = licensePlate.toUpperCase().trim();
         Integer vehicleId = vehicleDao.getVehicleId(licensePlate);
-        
+
         if (vehicleId == null) {
             return false;
         }
-        
+
         return true;
     }
-    
-    private static void setUpDatabase() {
 
-        try (Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "")) {
+    private static void setUpDatabase(String database, String user, String pw) {
+
+        try (Connection conn = DriverManager.getConnection(database, user, pw)) {
 
             conn.prepareStatement("CREATE TABLE IF NOT EXISTS Vehicle(id integer auto_increment primary key, plate varchar(30), odometer integer);").executeUpdate();
             conn.prepareStatement("CREATE TABLE IF NOT EXISTS Entry(id integer auto_increment primary key, vehicle_id integer, date timestamp(0), "
@@ -124,5 +122,19 @@ public class VehicleLogService {
             System.out.println("Error: " + e.getMessage() + " " + e.getSQLState());
         }
     }
-    
+
+    public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return false;
+        } catch (NullPointerException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isNotValid(String s) {
+        return (s.isEmpty() || s.equals(" "));
+    }
 }

@@ -1,9 +1,11 @@
 package vehiclelogapp.ui;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -16,13 +18,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Paint;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import vehiclelogapp.domain.VehicleLogService;
 
@@ -37,11 +36,16 @@ public class GraphicInterface extends Application {
     private ObservableList<String> vehiclesMenuItems;
 
     @Override
-    public void init() {
+    public void init() throws FileNotFoundException, IOException {
         
-        service = new VehicleLogService();
+        Properties properties = new Properties();
+        properties.load(new FileInputStream("config.properties"));
+        String db = properties.getProperty("database");
+        String user = properties.getProperty("user");
+        String pw = properties.getProperty("password");
+        
+        service = new VehicleLogService(db, user, pw);
         vehiclesMenuItems = FXCollections.observableArrayList();
-       
 
     }
 
@@ -49,7 +53,6 @@ public class GraphicInterface extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         // Valikot
-        //ObservableList<String> vehiclesMenuItems = FXCollections.observableArrayList();
         ComboBox cBVehicleMenu = new ComboBox();
         cBVehicleMenu.setVisibleRowCount(5);
         cBVehicleMenu.setPromptText("Ajoneuvo");
@@ -58,7 +61,6 @@ public class GraphicInterface extends Application {
         cBEntryMenu.setPromptText("Ajoneuvo");
 
         setMenus();
-
         cBVehicleMenu.setItems(vehiclesMenuItems);
         cBEntryMenu.setItems(vehiclesMenuItems);
 
@@ -82,7 +84,7 @@ public class GraphicInterface extends Application {
         Button cancelVehicleBtn = new Button("Cancel");
 
         // Tapahtumasyötön komponentit
-        Label msg = new Label();        // Edelliset kilometrit, rekkari
+        Label msg = new Label();
         Label kmLbl = new Label("Anna matkamittarin lukema");
         TextField odoFieldEntryScene = new TextField();
         odoFieldEntryScene.setMinWidth(300);
@@ -115,9 +117,8 @@ public class GraphicInterface extends Application {
         mainLayout.setCenter(listAndChoiceBox);
         mainLayout.setBottom(quitBox);
         mainLayout.setPadding(new Insets(20, 20, 20, 20));
-        
+
         Scene mainScene = new Scene(mainLayout);
-        
 
         // Auton syöttö
         GridPane addVehicle = new GridPane();
@@ -243,14 +244,16 @@ public class GraphicInterface extends Application {
 
                 if (service.vehicleExists(lp)) {
                     errorMsg.setText("Tunnuksella löytyy jo ajoneuvo!");
+                } else if (isNotValid(lp)) {
+                    errorMsg.setText("Anna tunnus!");
                 } else if (!isInteger(setOdo)) {
                     errorMsg.setText("Tarkista matkamittarin lukema!");
                 } else {
                     int km = Integer.parseInt(setOdo);
                     service.addVehicle(lp, km);
-                    service.addEntry(lp, km, "admin", "aloitussyöttö");
                     plateField.clear();
                     odoFieldVehicleScene.clear();
+                    errorMsg.setText("");
                     setMenus();
                     cBVehicleMenu.setItems(vehiclesMenuItems);
                     cBEntryMenu.setItems(vehiclesMenuItems);
@@ -278,7 +281,7 @@ public class GraphicInterface extends Application {
             }
         });
 
-        // Submit -nappi -> tallennus (msg = virheviesti)
+        // Submit -nappi -> tallennus
         submitEntryBtn.setOnAction(event -> {
             String veh = (String) cBEntryMenu.getValue();
             String kmsAsString = odoFieldEntryScene.getText();
@@ -287,17 +290,17 @@ public class GraphicInterface extends Application {
             int lastOdoKm = 0;
 
             if (veh != null) {
-            try {
-                lastOdoKm = service.getLatestOdometer(veh);
-            } catch (SQLException ex) {
-                Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    lastOdoKm = service.getLatestOdometer(veh);
+                } catch (SQLException ex) {
+                    Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            }
-            
+
             if ((veh == null) || (!isInteger(kmsAsString)) || (isNotValid(dr))
                     || (isNotValid(tp))) {
                 msg.setText("Tarkista tiedot!");
-                
+
             } else if (lastOdoKm > Integer.parseInt(kmsAsString)) {
                 msg.setText("Tarkista matkamittarin lukema!");
 
@@ -313,7 +316,7 @@ public class GraphicInterface extends Application {
                 } catch (SQLException ex) {
                     Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            
+
             }
         });
 
@@ -324,7 +327,6 @@ public class GraphicInterface extends Application {
 
     }
 
-    // Santa's little helpers...
     public static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
@@ -341,11 +343,11 @@ public class GraphicInterface extends Application {
     }
 
     public void setMenus() throws SQLException {
-
         ArrayList<String> carData = service.listVehicles();
         for (String s : carData) {
-            vehiclesMenuItems.add(s);
+            if (!vehiclesMenuItems.contains(s)) {
+                vehiclesMenuItems.add(s);
+            }
         }
-
     }
 }

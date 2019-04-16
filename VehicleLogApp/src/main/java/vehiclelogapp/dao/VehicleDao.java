@@ -1,4 +1,3 @@
-
 package vehiclelogapp.dao;
 
 import java.sql.Connection;
@@ -8,21 +7,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 import vehiclelogapp.domain.Vehicle;
 
-
 public class VehicleDao implements Dao<Vehicle, Integer> {
+
     private String databaseUrl;
-    
-    
 
     public VehicleDao(String database) {
         this.databaseUrl = database;
     }
-    
-    
-    
 
     @Override
     public Vehicle create(Vehicle vehicle) throws SQLException {
@@ -31,8 +24,7 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
         stmt.setString(1, vehicle.getLicensePlate());
         stmt.setInt(2, vehicle.getKilometers());
         stmt.executeUpdate();
-        
-        // Palautetaan olio luodulla avaimella:
+
         int id = -1;
         ResultSet generatedKeys = stmt.getGeneratedKeys();
         if (generatedKeys.next()) {
@@ -41,9 +33,7 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
         generatedKeys.close();
         stmt.close();
         conn.close();
-        
         return read(id);
-        
     }
 
     @Override
@@ -52,7 +42,7 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Vehicle WHERE id = ?");
         stmt.setInt(1, key);
         ResultSet rs = stmt.executeQuery();
-        
+
         if (!rs.next()) {
             return null;
         }
@@ -61,20 +51,18 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
         rs.close();
         conn.close();
         return returnVehicle;
-        
-        
-    }
 
+    }
 
     @Override
     public ArrayList<Vehicle> list() throws SQLException {
-        
+
         Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Vehicle");
         ResultSet rs = stmt.executeQuery();
-        
+
         ArrayList<Vehicle> vehicles = new ArrayList<>();
-        
+
         while (rs.next()) {
             Vehicle toAdd = new Vehicle(rs.getInt("id"), rs.getString("plate"), rs.getInt("odometer"));
             vehicles.add(toAdd);
@@ -82,29 +70,28 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
         rs.close();
         stmt.close();
         conn.close();
-        
+
         return vehicles;
     }
-    
+
     public Integer getVehicleId(String licensePlate) throws SQLException {
         Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
         PreparedStatement stmt = conn.prepareStatement("SELECT id FROM Vehicle WHERE plate = ?");
-                
+
         stmt.setString(1, licensePlate);
         ResultSet rs = stmt.executeQuery();
-        
+
         if (!rs.next()) {
             return null;
         }
-        
+
         Integer result = rs.getInt("id");
         stmt.close();
         rs.close();
         conn.close();
-        
+
         return result;
-        
-        
+
     }
-    
+
 }

@@ -10,15 +10,12 @@ import java.util.ArrayList;
 import vehiclelogapp.domain.Entry;
 
 public class EntryDao implements Dao<Entry, Integer> {
-    
+
     private String databaseUrl;
-    
 
     public EntryDao(String databaseUrl) {
         this.databaseUrl = databaseUrl;
     }
-    
-    
 
     @Override
     public Entry create(Entry entry) throws SQLException {
@@ -32,8 +29,6 @@ public class EntryDao implements Dao<Entry, Integer> {
         stmt.setString(4, entry.getDriver());
         stmt.setString(5, entry.getEntryType());
         stmt.executeUpdate();
-
-        // Palautetaan olio luodulla avaimella:
         int id = -1;
         ResultSet generatedKeys = stmt.getGeneratedKeys();
         if (generatedKeys.next()) {
@@ -63,10 +58,8 @@ public class EntryDao implements Dao<Entry, Integer> {
         rs.close();
         conn.close();
         return returnEntry;
-
     }
 
-   
     @Override
     public ArrayList<Entry> list() throws SQLException {
 
@@ -106,14 +99,14 @@ public class EntryDao implements Dao<Entry, Integer> {
         conn.close();
         return entries;
     }
-    
+
     public int latestOdometerForVehicle(Integer vehicleId) throws SQLException {
-        
+
         Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Entry WHERE vehicle_id = ? "
                 + "ORDER BY date DESC");
         stmt.setInt(1, vehicleId);
-        
+
         ResultSet rs = stmt.executeQuery();
         ArrayList<Entry> entries = new ArrayList<>();
         while (rs.next()) {
@@ -121,12 +114,10 @@ public class EntryDao implements Dao<Entry, Integer> {
                     rs.getTimestamp("date"), rs.getString("driver"), rs.getString("type"));
             entries.add(toAdd);
         }
-        //lue Entryn odometer
         int res = entries.get(0).getOdometer();
         stmt.close();
         rs.close();
         conn.close();
-
         return res;
     }
 }

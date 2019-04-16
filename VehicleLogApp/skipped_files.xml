@@ -6,5 +6,4 @@
 
 <suppressions>
     <suppress files="vehiclelogapp.ui.GraphicInterface.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="vehiclelogapp.ui.TextInterface.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>

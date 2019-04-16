@@ -1,42 +1,20 @@
 package vehiclelogapp;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import vehiclelogapp.domain.VehicleLogService;
 
 public class VehicleLogServiceTest {
 
-    static Connection conn;
     private VehicleLogService testService;
     
     
-    @BeforeClass
-    public static void setUp() {
-        
-        try (Connection conn = DriverManager.getConnection("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "sa", "")) {
-
-            conn.prepareStatement("DROP TABLE Vehicle IF EXISTS;").executeUpdate();
-            conn.prepareStatement("DROP TABLE Entry IF EXISTS;").executeUpdate();
-
-            conn.prepareStatement("CREATE TABLE Vehicle(id integer auto_increment primary key, plate varchar(30), odometer integer);").executeUpdate();
-            conn.prepareStatement("CREATE TABLE Entry(id integer auto_increment primary key, vehicle_id integer, date timestamp(0), "
-                    + "odometerread integer, driver varchar(30), type varchar(50), foreign key (vehicle_id) REFERENCES Vehicle(id));").executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage() + " " + e.getSQLState());
-
-        }
-    }
-
     @Before
     public void conn() {
-        testService = new VehicleLogService("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
+        testService = new VehicleLogService("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "sa", "");
     }
 
     @Test
@@ -69,10 +47,15 @@ public class VehicleLogServiceTest {
     }
     
     @Test
-    public void lastOdometerCorrect() throws SQLException {
+    public void lastOdometerCorrectNewCar() throws SQLException {
         testService.addVehicle("A4", 0);
-        testService.addEntry("A4", 15, "MrX", "Kuljetus");
-        assertEquals(15, testService.getLatestOdometer("A4"));
+        assertEquals(0, testService.getLatestOdometer("A4"));
+    }
+    
+    
+    @Test
+    public void cannotAddEntryWithoutVehicle() throws SQLException {
+        assertFalse(testService.addEntry("HJK77", 0, "JJ", "nn"));
     }
     
     @Test
@@ -90,6 +73,16 @@ public class VehicleLogServiceTest {
         assertTrue(!res.isEmpty());
     }
 
+    @Test
+    public void noEntriesForNonExistentVehicle() throws SQLException {
+        assertNull(testService.listEntriesForVehicle("YYA48"));
+    }
+    
+    @Test
+    public void canNotAddWithoutLicensePlate() throws SQLException {
+        assertFalse(testService.addVehicle("", 0));
+    }
+    
 
 
 }
