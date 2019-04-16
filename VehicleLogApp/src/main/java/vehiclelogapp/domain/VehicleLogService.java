@@ -1,5 +1,7 @@
 package vehiclelogapp.domain;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -17,6 +19,8 @@ public class VehicleLogService {
 
         this.vehicleDao = new VehicleDao("jdbc:h2:./logbook");
         this.entryDao = new EntryDao("jdbc:h2:./logbook");
+        setUpDatabase();
+        
         
     }
     // Toinen konstruktori testausta varten
@@ -107,4 +111,18 @@ public class VehicleLogService {
         
         return true;
     }
+    
+    private static void setUpDatabase() {
+
+        try (Connection conn = DriverManager.getConnection("jdbc:h2:./logbook", "sa", "")) {
+
+            conn.prepareStatement("CREATE TABLE IF NOT EXISTS Vehicle(id integer auto_increment primary key, plate varchar(30), odometer integer);").executeUpdate();
+            conn.prepareStatement("CREATE TABLE IF NOT EXISTS Entry(id integer auto_increment primary key, vehicle_id integer, date timestamp(0), "
+                    + "odometerread integer, driver varchar(30), type varchar(50), foreign key (vehicle_id) REFERENCES Vehicle(id));").executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage() + " " + e.getSQLState());
+        }
+    }
+    
 }
