@@ -10,6 +10,9 @@ Sovellus käyttää h2-tietokannanhallintajärjestelmää ja sen tietokanta luod
 
 [Arkkitehtuurikuvaus](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
 
+## Releaset
+
+[Viikko 5](https://github.com/skoskipaa/ot-harjoitustyo/releases/tag/viikko5)
 
 ## Komentorivitoiminnot
 
@@ -24,5 +27,8 @@ Checkstyle voidaan suorittaa komennolla
 
 Ohjelma voidaan suorittaa komentoriviltä komennolla
 *mvn compile exec:java -Dexec.mainClass=vehiclelogapp.ui.Main*
+
+Suoritettava jar-tiedosto (VehicleLogApp-1.0-SNAPSHOT.jar) luodaan target-hakemistoon komennolla
+*mvn package*
 
 
