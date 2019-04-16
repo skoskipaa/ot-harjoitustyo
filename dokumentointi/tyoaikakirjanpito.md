@@ -16,5 +16,7 @@
 |11.4.2019  |2.5|Testien kirjoitusta  |
 |12.4.2019  |3  |Käyttöliittymän uudistus |
 |13.4.2019  |4  |Käyttöliittymän muokkausta, bugien korjausta|
+|15.4.2019  |1  |Testien kirjoitusta  |
+|16.4.2019  |5  |Testien kirjoitusta, bugien korjausta, käyttöliittymän muokkausta|
 
-Yhteensä 35 tuntia
+Yhteensä 41 tuntia
