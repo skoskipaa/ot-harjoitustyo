@@ -18,5 +18,6 @@
 |13.4.2019  |4  |Käyttöliittymän muokkausta, bugien korjausta|
 |15.4.2019  |1  |Testien kirjoitusta  |
 |16.4.2019  |5  |Testien kirjoitusta, bugien korjausta, käyttöliittymän muokkausta|
+|21.4.2019  |5  |Hakutoiminnon lisäys, koodin refaktorointia  |
 
-Yhteensä 41 tuntia
+Yhteensä 46 tuntia
