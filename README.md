@@ -4,6 +4,8 @@ Sovelluksen avulla on mahdollista ylläpitää ajopäiväkirjaa usealle ajoneuvo
 Sovellus käyttää h2-tietokannanhallintajärjestelmää ja sen tietokanta luodaan tiedostoon logbook.mv.db.
 
 ## Dokumentaatio
+[Käyttöohje](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kayttoohje.md)
+
 [Työaikakirjanpito](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/tyoaikakirjanpito.md)
 
 [Vaatimusmäärittely](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)
