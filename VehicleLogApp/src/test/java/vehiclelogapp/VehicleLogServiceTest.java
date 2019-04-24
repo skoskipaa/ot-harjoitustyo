@@ -83,6 +83,12 @@ public class VehicleLogServiceTest {
         assertFalse(testService.addVehicle("", 0));
     }
     
+//    @Test
+//    public void odometerOkAfterEntry() throws SQLException {
+//        testService.addVehicle("JJ99", 0);
+//        testService.addEntry("JJ99", 15, "JJ", "nn");
+//        assertEquals(15, testService.getLatestOdometer("JJ99"));
+//    }
 
 
 }

@@ -2,6 +2,11 @@ package vehiclelogapp.domain;
 
 import java.util.ArrayList;
 
+/**
+ * Ajoneuvoa kuvaava luokka.
+ * 
+ */
+
 public class Vehicle {
 
     private int id;
@@ -48,7 +53,7 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return licensePlate; // + ", matkamittarin ensimmäinen lukema: " + kilometers;
+        return licensePlate;
     }
 
 }

@@ -27,10 +27,14 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import vehiclelogapp.domain.VehicleLogService;
 
+/**
+ * Graafisen käyttöliittymän toteuttava luokka
+ * 
+ */
+
 public class GraphicInterface extends Application {
 
     private VehicleLogService service;
-    private Scene mainScene;
     private Scene addVehicle;
     private Scene addEntry;
     private Scene listEntries;
@@ -58,6 +62,7 @@ public class GraphicInterface extends Application {
         ComboBox cBVehicleMenu = new ComboBox();
         cBVehicleMenu.setVisibleRowCount(5);
         cBVehicleMenu.setPromptText("Ajoneuvo");
+        cBVehicleMenu.setTooltip(new Tooltip("Valitse ajoneuvo"));
         ComboBox cBEntryMenu = new ComboBox();
         cBEntryMenu.setVisibleRowCount(5);
         cBEntryMenu.setPromptText("Ajoneuvo");
@@ -72,6 +77,7 @@ public class GraphicInterface extends Application {
         Button addEntryBtn = new Button("Lisää tapahtuma");
         Button listVehiclesBtnMain = new Button("Listaa kaikki ajoneuvot");
         Button listEntriesBtnMain = new Button("Listaa ajoneuvon tapahtumat");
+        Button searchEntriesBtn = new Button("Hae tapahtumia");                     //////////////////
         Button exitBtn = new Button("Lopeta");
         Label greetingText = new Label("Tervetuloa! Valitse toiminto!");
 
@@ -105,6 +111,13 @@ public class GraphicInterface extends Application {
         Button submitEntryBtn = new Button("Tallenna");
         Button cancelEntryBtn = new Button("Cancel");
         Button selectVehicleForEntryBtn = new Button("Näytä ajoneuvon tiedot");
+        
+        // Avoimen haun komponentit
+        Label searchLabel = new Label("Anna hakusana:");      
+        TextField searchField = new TextField();
+        Button submitSearch = new Button("Etsi");
+        Button cancelSearch = new Button("Cancel");
+        
 
         // Päänäkymä
         BorderPane mainLayout = new BorderPane();
@@ -114,16 +127,17 @@ public class GraphicInterface extends Application {
         HBox listAndChoiceBox = new HBox();
         listAndChoiceBox.setPadding(new Insets(20, 20, 20, 20));
         listAndChoiceBox.setSpacing(5);
-        HBox quitBox = new HBox();
-        quitBox.setPadding(new Insets(20, 20, 20, 20));
+        HBox lastRowBox = new HBox();
+        lastRowBox.setPadding(new Insets(20, 20, 20, 20));
+        lastRowBox.setSpacing(85);
 
         btnsMainBox.getChildren().addAll(addVehicleBtn, addEntryBtn, listVehiclesBtnMain);
         listAndChoiceBox.getChildren().addAll(listEntriesBtnMain, cBVehicleMenu);
-        quitBox.getChildren().add(exitBtn);
+        lastRowBox.getChildren().addAll(searchEntriesBtn, exitBtn);
 
         mainLayout.setTop(btnsMainBox);
         mainLayout.setCenter(listAndChoiceBox);
-        mainLayout.setBottom(quitBox);
+        mainLayout.setBottom(lastRowBox);
         mainLayout.setPadding(new Insets(20, 20, 20, 20));
 
         Scene startScene = new Scene(mainLayout);
@@ -162,6 +176,17 @@ public class GraphicInterface extends Application {
         addNewEntry.setVgap(10);
         addNewEntry.setHgap(10);
         Scene entryScene = new Scene(addNewEntry);
+        
+        // Haku
+        GridPane searchEntries = new GridPane();                                    /////////////////////////////////
+        searchEntries.add(searchLabel, 0, 0);
+        searchEntries.add(searchField, 0, 1);
+        searchEntries.add(submitSearch, 0, 2);
+        searchEntries.add(cancelSearch, 1, 2);
+        searchEntries.setPadding(new Insets(20,20,20,20));
+        searchEntries.setHgap(10);
+        searchEntries.setVgap(10);
+        Scene searchScene = new Scene(searchEntries);
 
         // Ikkuna listausten näyttöön
         StackPane resultWndwLayout = new StackPane();
@@ -189,7 +214,18 @@ public class GraphicInterface extends Application {
             primaryStage.setScene(entryScene);
 
         });
+        
+        // Hakuun-nappi
+        searchEntriesBtn.setOnAction(event -> {
+            primaryStage.setScene(searchScene);
+        });
 
+        // Peru haku -nappi
+        cancelSearch.setOnAction(event -> {
+            searchField.clear();
+            primaryStage.setScene(startScene);
+        });
+        
         // Peru auton lisäys -nappi
         cancelVehicleBtn.setOnAction(event -> {
             plateField.clear();
@@ -217,6 +253,24 @@ public class GraphicInterface extends Application {
                 });
                 list.setItems(data);
                 resultWindow.setTitle("Ajoneuvot");
+                resultWindow.setScene(secondWndwScene);
+                resultWindow.show();
+            } catch (SQLException ex) {
+                Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        
+        // Hakulistaus
+        submitSearch.setOnAction(event -> {
+            try {
+                String searchKey = searchField.getText();
+                data.clear();
+                ArrayList<String> searchRes = service.searchEntries(searchKey);
+                searchRes.forEach((s) -> {
+                    data.add(s);
+                });
+                list.setItems(data);
+                resultWindow.setTitle("Haku: " + searchKey);
                 resultWindow.setScene(secondWndwScene);
                 resultWindow.show();
             } catch (SQLException ex) {

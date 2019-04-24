@@ -3,6 +3,11 @@ package vehiclelogapp.domain;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * Ajoneuvolle syötettävää tapahtumaa kuvaava luokka.
+ * 
+ */
+
 public class Entry {
 
     private int id;
@@ -11,25 +16,28 @@ public class Entry {
     private Timestamp time;
     private String driver;
     private String entryType;
+    private int lastTrip;
 
     public Entry() {
     }
 
-    public Entry(int id, Integer vehicleId, int odometer, Timestamp time, String driver, String entryType) {
+    public Entry(int id, Integer vehicleId, int odometer, Timestamp time, String driver, String entryType, int lastTrip) {
         this.id = id;
         this.vehicleId = vehicleId;
         this.odometer = odometer;
         this.time = time;
         this.driver = driver;
         this.entryType = entryType;
+        this.lastTrip = lastTrip;
     }
 
-    public Entry(Integer vehicleId, int odometer, Timestamp time, String driver, String entryType) {
+    public Entry(Integer vehicleId, int odometer, Timestamp time, String driver, String entryType, int lastTrip) {
         this.vehicleId = vehicleId;
         this.odometer = odometer;
         this.time = time;
         this.driver = driver;
         this.entryType = entryType;
+        this.lastTrip = lastTrip;
     }
 
     public Entry(int odometer, String driver, String entryType) {
@@ -87,9 +95,19 @@ public class Entry {
         this.entryType = entryType;
     }
 
+    public int getLastTrip() {
+        return lastTrip;
+    }
+
+    public void setLastTrip(int lastTrip) {
+        this.lastTrip = lastTrip;
+    }
+    
+    
+
     @Override
     public String toString() {
-        return time + "\t\t" + odometer + "\t" + driver + "; " + entryType;
+        return time + "\tMatkamittarin lukema: " + odometer + " (Trip: " + lastTrip + " km)" + "\t" + driver + "; " + entryType;
     }
 
 }

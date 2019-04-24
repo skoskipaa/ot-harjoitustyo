@@ -22,8 +22,8 @@ public class EntryTest {
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
         
         entry = new Entry();
-        entry2 = new Entry(1, 1, 13000, date, "Pekka", "Kuljetus");
-        entry3 = new Entry(1, 13500, date, "Jukka", "Huolto");
+        entry2 = new Entry(1, 1, 13000, date, "Pekka", "Kuljetus", 0);
+        entry3 = new Entry(1, 13500, date, "Jukka", "Huolto", 0);
         
     }
     

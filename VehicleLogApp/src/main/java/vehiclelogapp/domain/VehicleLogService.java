@@ -6,24 +6,41 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import vehiclelogapp.dao.DaoService;
 import vehiclelogapp.dao.EntryDao;
 import vehiclelogapp.dao.VehicleDao;
 
+/**
+ * Sovelluslogiikasta vastaava luokka.
+ *
+ */
 public class VehicleLogService {
 
     private VehicleDao vehicleDao;
     private EntryDao entryDao;
-    private String database;
+    //private String database;
+    private DaoService daoService;
 
     public VehicleLogService(String database, String user, String pw) {
 
-        this.database = database;
-        this.entryDao = new EntryDao(database);
-        this.vehicleDao = new VehicleDao(database);
-        setUpDatabase(database, user, pw);
+        //this.database = database;
+        this.entryDao = new EntryDao(database, user, pw);
+        this.vehicleDao = new VehicleDao(database, user, pw);
+        this.daoService = new DaoService(database, user, pw);
 
     }
 
+    /**
+     * Lisää ajoneuvon järjestelmään. Lisäyksen jälkeen metodi tekee ensimmäisen
+     * tapahtumasyötön.
+     *
+     * @see vehiclelogapp.domain.VehicleLogService#addEntry(java.lang.String,
+     * int, java.lang.String, java.lang.String)
+     * @param licensePlate Lisättävän ajoneuvon rekisterinumero
+     * @param kilometers Matkamittarin lukema
+     * @return true, mikäli ajoneuvon lisääminen onnistuu, muuten false.
+     * @throws SQLException
+     */
     public boolean addVehicle(String licensePlate, int kilometers) throws SQLException {
         if (isNotValid(licensePlate)) {
             return false;
@@ -43,6 +60,16 @@ public class VehicleLogService {
         return true;
     }
 
+    /**
+     * Lisää järjestelmässä olevalle ajoneuvolle tapahtuman.
+     *
+     * @param licensePlate Ajoneuvon rekisteritunnus
+     * @param km Matkamittarin lukema
+     * @param driver Kuljettajan nimi
+     * @param entryType Tapahtumaan liittyvä selite
+     * @return true, mikäli tapahtuman lisääminen onnistui, muuten false.
+     * @throws SQLException
+     */
     public boolean addEntry(String licensePlate, int km, String driver, String entryType) throws SQLException {
         if (isNotValid(licensePlate)) {
             return false;
@@ -54,8 +81,11 @@ public class VehicleLogService {
         if (vehicleId == null) {
             return false;
         }
+        int lastOdom = entryDao.latestOdometerForVehicle(vehicleId);
+        int sum = km - lastOdom;
+        //System.out.println(km + "-" + lastOdom + "=" + sum );
         String dr = driver.toUpperCase().trim();
-        Entry entryToAdd = new Entry(vehicleId, km, date, dr, entryType);
+        Entry entryToAdd = new Entry(vehicleId, km, date, dr, entryType.toUpperCase(), sum);
         Entry e = entryDao.create(entryToAdd);
 
         if (e == null) {
@@ -64,6 +94,12 @@ public class VehicleLogService {
         return true;
     }
 
+    /**
+     * Hakee järjestemästä kaikki sinne syötetyt ajoneuvot.
+     *
+     * @return Palauttaa ajoneuvojen rekisteritunnukset listana.
+     * @throws SQLException
+     */
     public ArrayList<String> listVehicles() throws SQLException {
         ArrayList<Vehicle> vehicles = vehicleDao.list();
         ArrayList<String> queryResults = new ArrayList<>();
@@ -74,6 +110,15 @@ public class VehicleLogService {
         return queryResults;
     }
 
+    /**
+     * Hakee järjestelmästä kaikki yhdelle ajoneuvolle syötetyt tapahtumat.
+     * Muotoillaan Entry-luokan toString()-metodilla.
+     *
+     * @see vehiclelogapp.domain.Entry#toString()
+     * @param licensePlate Ajoneuvon rekisteritunnus
+     * @return Palauttaa kaikki tapahtumat listana.
+     * @throws SQLException
+     */
     public ArrayList<String> listEntriesForVehicle(String licensePlate) throws SQLException {
         licensePlate = licensePlate.toUpperCase().trim();
         Integer vehicleId = vehicleDao.getVehicleId(licensePlate);
@@ -89,16 +134,54 @@ public class VehicleLogService {
         return queryResults;
     }
 
+    /**
+     * Hakee tapahtumat hakusanalla.
+     *
+     * @param key Hakusana
+     * @return Lista tapahtumista sekä yhteenlaskettu summa.
+     * @throws SQLException
+     */
+    public ArrayList<String> searchEntries(String key) throws SQLException {
+        String searchKey = key.toUpperCase();
+        ArrayList<Entry> entries = entryDao.listEntriesByType(searchKey);
+        if (entries.isEmpty()) {
+            return new ArrayList<>();
+        }
+        ArrayList<String> results = new ArrayList<>();
+        int sum = 0;
+        for (Entry e : entries) {
+            results.add(e.toString());
+            sum = sum + e.getLastTrip();
+        }
+        String totalKm = "Kilometrejä yhteensä: " + sum;
+        results.add(totalKm);
+        return results;
+    }
+
+    /**
+     * Hakee ajoneuvon viimeisimmän matkamittarin lukeman.
+     *
+     * @param licensePlate Haettavan ajoneuvon rekisteritunnus.
+     * @return Kilometrilukema
+     * @throws SQLException
+     */
     public int getLatestOdometer(String licensePlate) throws SQLException {
         licensePlate = licensePlate.toUpperCase().trim();
         Integer vehicleId = vehicleDao.getVehicleId(licensePlate);
-        if (vehicleId == null) {
-            return 0;
+        if (vehicleId != null) {
+            int result = entryDao.latestOdometerForVehicle(vehicleId);
+            return result;
         }
-        int result = entryDao.latestOdometerForVehicle(vehicleId);
-        return result;
+        return 0;
     }
 
+    /**
+     * Apumetodi, joka tarkistaa, että ajoneuvo on syötetty järjestelmään.
+     *
+     * @param licensePlate Tarkistettavan ajoneuvon rekisteritunnus
+     * @return true, mikäli ajoneuvo löytyy, muuten false.
+     * @throws SQLException
+     */
     public boolean vehicleExists(String licensePlate) throws SQLException {
         licensePlate = licensePlate.toUpperCase().trim();
         Integer vehicleId = vehicleDao.getVehicleId(licensePlate);
@@ -108,19 +191,6 @@ public class VehicleLogService {
         }
 
         return true;
-    }
-
-    private static void setUpDatabase(String database, String user, String pw) {
-
-        try (Connection conn = DriverManager.getConnection(database, user, pw)) {
-
-            conn.prepareStatement("CREATE TABLE IF NOT EXISTS Vehicle(id integer auto_increment primary key, plate varchar(30), odometer integer);").executeUpdate();
-            conn.prepareStatement("CREATE TABLE IF NOT EXISTS Entry(id integer auto_increment primary key, vehicle_id integer, date timestamp(0), "
-                    + "odometerread integer, driver varchar(30), type varchar(50), foreign key (vehicle_id) REFERENCES Vehicle(id));").executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage() + " " + e.getSQLState());
-        }
     }
 
     public static boolean isInteger(String s) {

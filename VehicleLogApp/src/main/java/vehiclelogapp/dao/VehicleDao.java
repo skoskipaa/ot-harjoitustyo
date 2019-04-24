@@ -11,15 +11,23 @@ import vehiclelogapp.domain.Vehicle;
 
 public class VehicleDao implements Dao<Vehicle, Integer> {
 
+    private DaoService service;
     private String databaseUrl;
+    private String user;
+    private String password;
 
-    public VehicleDao(String database) {
-        this.databaseUrl = database;
+    public VehicleDao(String databaseUrl, String user, String password) {
+        
+        this.service = new DaoService();
+        this.databaseUrl = databaseUrl;
+        this.user = user;
+        this.password = password;
+        
     }
 
     @Override
     public Vehicle create(Vehicle vehicle) throws SQLException {
-        Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
+        Connection conn = service.getDbConnection(databaseUrl, user, password);
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Vehicle (plate, odometer) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
         stmt.setString(1, vehicle.getLicensePlate());
         stmt.setInt(2, vehicle.getKilometers());
@@ -38,7 +46,7 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
 
     @Override
     public Vehicle read(Integer key) throws SQLException {
-        Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
+        Connection conn = service.getDbConnection(databaseUrl, user, password);
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Vehicle WHERE id = ?");
         stmt.setInt(1, key);
         ResultSet rs = stmt.executeQuery();
@@ -57,7 +65,7 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
     @Override
     public ArrayList<Vehicle> list() throws SQLException {
 
-        Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
+        Connection conn = service.getDbConnection(databaseUrl, user, password);
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Vehicle");
         ResultSet rs = stmt.executeQuery();
 
@@ -75,9 +83,8 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
     }
 
     public Integer getVehicleId(String licensePlate) throws SQLException {
-        Connection conn = DriverManager.getConnection(databaseUrl, "sa", "");
+        Connection conn = service.getDbConnection(databaseUrl, user, password);
         PreparedStatement stmt = conn.prepareStatement("SELECT id FROM Vehicle WHERE plate = ?");
-
         stmt.setString(1, licensePlate);
         ResultSet rs = stmt.executeQuery();
 
