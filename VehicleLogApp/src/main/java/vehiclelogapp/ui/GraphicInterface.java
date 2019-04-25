@@ -77,7 +77,7 @@ public class GraphicInterface extends Application {
         Button addEntryBtn = new Button("Lisää tapahtuma");
         Button listVehiclesBtnMain = new Button("Listaa kaikki ajoneuvot");
         Button listEntriesBtnMain = new Button("Listaa ajoneuvon tapahtumat");
-        Button searchEntriesBtn = new Button("Hae tapahtumia");                     //////////////////
+        Button searchEntriesBtn = new Button("Hae tapahtumia");           
         Button exitBtn = new Button("Lopeta");
         Label greetingText = new Label("Tervetuloa! Valitse toiminto!");
 
@@ -131,9 +131,9 @@ public class GraphicInterface extends Application {
         lastRowBox.setPadding(new Insets(20, 20, 20, 20));
         lastRowBox.setSpacing(85);
 
-        btnsMainBox.getChildren().addAll(addVehicleBtn, addEntryBtn, listVehiclesBtnMain);
+        btnsMainBox.getChildren().addAll(addVehicleBtn, addEntryBtn, searchEntriesBtn);
         listAndChoiceBox.getChildren().addAll(listEntriesBtnMain, cBVehicleMenu);
-        lastRowBox.getChildren().addAll(searchEntriesBtn, exitBtn);
+        lastRowBox.getChildren().addAll(listVehiclesBtnMain, exitBtn);
 
         mainLayout.setTop(btnsMainBox);
         mainLayout.setCenter(listAndChoiceBox);
