@@ -21,5 +21,6 @@
 |21.4.2019  |5  |Hakutoiminnon lisäys, koodin refaktorointia  |
 |24.4.2019  |1  |Käyttöohje |
 |26.4.2019  |3  |Arkkitehtuurikuvauksen laajennus, JavaDocin täydennys |
+|26.7.2019  |1  |Testausta  |
 
-Yhteensä 50 tuntia
+Yhteensä 51 tuntia
