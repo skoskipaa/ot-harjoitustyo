@@ -36,5 +36,4 @@ Ohjelma voidaan suorittaa komentoriviltä komennolla
 Suoritettava jar-tiedosto (VehicleLogApp-1.0-SNAPSHOT.jar) luodaan target-hakemistoon komennolla
 **mvn package**
 
-(Ohjelmaa suoritettaessa suoritushakemistosta tulee myös löytyä tiedosto *config.properties*.)
 
