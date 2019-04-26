@@ -15,7 +15,8 @@ Sovellus käyttää h2-tietokannanhallintajärjestelmää ja sen tietokanta luod
 ## Releaset
 
 [Viikko 5](https://github.com/skoskipaa/ot-harjoitustyo/releases/tag/viikko5)
-[Viikko 8](https://github.com/skoskipaa/ot-harjoitustyo/releases/tag/viikko6)
+
+[Viikko 6](https://github.com/skoskipaa/ot-harjoitustyo/releases/tag/viikko6)
 
 ## Komentorivitoiminnot
 
