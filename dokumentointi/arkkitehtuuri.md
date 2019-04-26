@@ -13,12 +13,12 @@ Käyttöliittymässä on neljä erilaista näkymää Scene-olioina toteutettuna 
 
 Ohjelman osien suhdetta kuvaa pakkauskaavio:
 
-<img src="https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kuvat/pakkauskaavio.png" width=400>
+<img src="https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kuvat/pakkauskaavio.png" width=700>
 
 ## Päätoiminnallisuudet
 ### Sekvenssikaavio ajoneuvon tapahtumien listauksesta
 
-<img src="https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kuvat/sekvenssikaavio2.png" width=400>
+<img src="https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kuvat/sekvenssikaavio2.png" width=700>
 
 ## Tietojen tallennus
 
