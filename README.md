@@ -27,6 +27,8 @@ Testikattavuusraportti on mahdollista luoda komennolla
 Checkstyle voidaan suorittaa komennolla
 **mvn jxr:jxr checkstyle:checkstyle**
 
+JavaDoc voidaan luoda komennolla **mvn javadoc:javadoc**
+
 Ohjelma voidaan suorittaa komentoriviltä komennolla
 **mvn compile exec:java -Dexec.mainClass=vehiclelogapp.ui.Main**
 
