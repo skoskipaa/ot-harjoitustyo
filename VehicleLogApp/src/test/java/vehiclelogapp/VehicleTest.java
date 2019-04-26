@@ -25,19 +25,18 @@ public class VehicleTest {
         Vehicle v = new Vehicle();
         assertTrue(v != null);
     }
-    
-    
+
     @Test
     public void vehicleExists() {
         assertTrue(vehicle != null && vehicle2 != null);
 
     }
+
     @Test
     public void getId() {
         assertEquals(1, vehicle2.getId());
     }
-    
-    
+
     @Test
     public void setId() {
         vehicle.setId(2);
@@ -48,23 +47,22 @@ public class VehicleTest {
     public void getLicensePlate() {
         assertEquals("hih111", vehicle2.getLicensePlate());
     }
+
     @Test
     public void setlicensePlate() {
         vehicle2.setLicensePlate("hii51");
         assertEquals("hii51", vehicle2.getLicensePlate());
     }
-    
-    
+
     @Test
     public void getKilometers() {
         assertEquals(123456, vehicle.getKilometers());
     }
-    
+
     @Test
     public void setKilometers() {
         vehicle2.setKilometers(14000);
         assertEquals(14000, vehicle2.getKilometers());
     }
-    
 
 }

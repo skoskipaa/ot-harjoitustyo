@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import vehiclelogapp.domain.Entry;
 
+/**
+ * Luokka hoitaa tapahtumien (Entry) käsittelyyn liittyvät tietokantatoiminnot
+ *
+ */
 public class EntryDao implements Dao<Entry, Integer> {
 
     private DaoService service;
@@ -106,6 +110,13 @@ public class EntryDao implements Dao<Entry, Integer> {
         return entries;
     }
 
+    /**
+     * Hakee ajoneuvon viimeisimmän matkamittarin lukeman
+     *
+     * @param vehicleId Ajoneuvon id tietokannassa
+     * @return Lukeman int-muodossa
+     * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
+     */
     public int latestOdometerForVehicle(Integer vehicleId) throws SQLException {
         Connection conn = service.getDbConnection(databaseUrl, user, password);
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Entry WHERE vehicle_id = ? "
@@ -128,6 +139,14 @@ public class EntryDao implements Dao<Entry, Integer> {
         return res;
     }
 
+    /**
+     * Hakee tapahtumia tapahtumien tapahtumatyyppikenttään tehtävän sanahaun
+     * perusteella.
+     *
+     * @param type Hakusana
+     * @return Palauttaa kaikki tapahtumat (Entry), joissa haettu merkkijono
+     * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
+     */
     public ArrayList<Entry> listEntriesByType(String type) throws SQLException {
         Connection conn = service.getDbConnection(databaseUrl, user, password);
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Entry WHERE type LIKE ?");

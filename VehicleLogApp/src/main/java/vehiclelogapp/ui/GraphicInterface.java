@@ -29,18 +29,25 @@ import vehiclelogapp.domain.VehicleLogService;
 
 /**
  * Graafisen käyttöliittymän toteuttava luokka
- * 
+ *
  */
-
 public class GraphicInterface extends Application {
 
     private VehicleLogService service;
     private Scene addVehicle;
     private Scene addEntry;
     private Scene listEntries;
-    private String chooseVehicleEntry;
     private ObservableList<String> vehicleMenuItems;
 
+    /**
+     * Lukee konfiguraatiotiedoston ja luo yhteyden toimintalogiikkaan. Luo
+     * listaolion valikkoja varten.
+     *
+     * @throws FileNotFoundException Heittää poikkeuksen, jos tiedostoa ei
+     * löydy.
+     * @throws IOException Heittää poikkeuksen, mikäli tiedoston luku
+     * epäonnistuu.
+     */
     @Override
     public void init() throws FileNotFoundException, IOException {
 
@@ -77,7 +84,7 @@ public class GraphicInterface extends Application {
         Button addEntryBtn = new Button("Lisää tapahtuma");
         Button listVehiclesBtnMain = new Button("Listaa kaikki ajoneuvot");
         Button listEntriesBtnMain = new Button("Listaa ajoneuvon tapahtumat");
-        Button searchEntriesBtn = new Button("Hae tapahtumia");           
+        Button searchEntriesBtn = new Button("Hae tapahtumia");
         Button exitBtn = new Button("Lopeta");
         Label greetingText = new Label("Tervetuloa! Valitse toiminto!");
 
@@ -111,13 +118,12 @@ public class GraphicInterface extends Application {
         Button submitEntryBtn = new Button("Tallenna");
         Button cancelEntryBtn = new Button("Cancel");
         Button selectVehicleForEntryBtn = new Button("Näytä ajoneuvon tiedot");
-        
+
         // Avoimen haun komponentit
-        Label searchLabel = new Label("Anna hakusana:");      
+        Label searchLabel = new Label("Anna hakusana:");
         TextField searchField = new TextField();
         Button submitSearch = new Button("Etsi");
         Button cancelSearch = new Button("Cancel");
-        
 
         // Päänäkymä
         BorderPane mainLayout = new BorderPane();
@@ -176,14 +182,14 @@ public class GraphicInterface extends Application {
         addNewEntry.setVgap(10);
         addNewEntry.setHgap(10);
         Scene entryScene = new Scene(addNewEntry);
-        
+
         // Haku
-        GridPane searchEntries = new GridPane();                                    /////////////////////////////////
+        GridPane searchEntries = new GridPane();
         searchEntries.add(searchLabel, 0, 0);
         searchEntries.add(searchField, 0, 1);
         searchEntries.add(submitSearch, 0, 2);
         searchEntries.add(cancelSearch, 1, 2);
-        searchEntries.setPadding(new Insets(20,20,20,20));
+        searchEntries.setPadding(new Insets(20, 20, 20, 20));
         searchEntries.setHgap(10);
         searchEntries.setVgap(10);
         Scene searchScene = new Scene(searchEntries);
@@ -214,7 +220,7 @@ public class GraphicInterface extends Application {
             primaryStage.setScene(entryScene);
 
         });
-        
+
         // Hakuun-nappi
         searchEntriesBtn.setOnAction(event -> {
             primaryStage.setScene(searchScene);
@@ -225,7 +231,7 @@ public class GraphicInterface extends Application {
             searchField.clear();
             primaryStage.setScene(startScene);
         });
-        
+
         // Peru auton lisäys -nappi
         cancelVehicleBtn.setOnAction(event -> {
             plateField.clear();
@@ -259,7 +265,7 @@ public class GraphicInterface extends Application {
                 Logger.getLogger(GraphicInterface.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
+
         // Hakulistaus
         submitSearch.setOnAction(event -> {
             try {
@@ -394,9 +400,7 @@ public class GraphicInterface extends Application {
     public static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
-        } catch (NumberFormatException e) {
-            return false;
-        } catch (NullPointerException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             return false;
         }
         return true;
@@ -408,10 +412,8 @@ public class GraphicInterface extends Application {
 
     public void setMenus() throws SQLException {
         ArrayList<String> carData = service.listVehicles();
-        for (String s : carData) {
-            if (!vehicleMenuItems.contains(s)) {
-                vehicleMenuItems.add(s);
-            }
-        }
+        carData.stream().filter((s) -> (!vehicleMenuItems.contains(s))).forEachOrdered((s) -> {
+            vehicleMenuItems.add(s);
+        });
     }
 }

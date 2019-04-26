@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import vehiclelogapp.domain.Vehicle;
 
+/**
+ * Luokka hoitaa ajoneuvojen (Vehicle) käsittelyyn liittyvät tietokantatoiminnot
+ *
+ */
 public class VehicleDao implements Dao<Vehicle, Integer> {
 
     private DaoService service;
@@ -17,12 +21,12 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
     private String password;
 
     public VehicleDao(String databaseUrl, String user, String password) {
-        
+
         this.service = new DaoService();
         this.databaseUrl = databaseUrl;
         this.user = user;
         this.password = password;
-        
+
     }
 
     @Override
@@ -82,6 +86,13 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
         return vehicles;
     }
 
+    /**
+     * Hakee ajoneuvon id:n tietokannasta
+     *
+     * @param licensePlate Rekisteritunnus
+     * @return Ajoneuvon id Integer-muodossa
+     * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
+     */
     public Integer getVehicleId(String licensePlate) throws SQLException {
         Connection conn = service.getDbConnection(databaseUrl, user, password);
         PreparedStatement stmt = conn.prepareStatement("SELECT id FROM Vehicle WHERE plate = ?");

@@ -4,9 +4,8 @@ import java.util.ArrayList;
 
 /**
  * Ajoneuvoa kuvaava luokka.
- * 
+ *
  */
-
 public class Vehicle {
 
     private int id;

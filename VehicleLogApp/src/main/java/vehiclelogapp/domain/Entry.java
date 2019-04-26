@@ -5,9 +5,8 @@ import java.time.LocalDateTime;
 
 /**
  * Ajoneuvolle syötettävää tapahtumaa kuvaava luokka.
- * 
+ *
  */
-
 public class Entry {
 
     private int id;
@@ -102,9 +101,12 @@ public class Entry {
     public void setLastTrip(int lastTrip) {
         this.lastTrip = lastTrip;
     }
-    
-    
 
+    /**
+     * Tulostuksia varten muotoiltu toString()
+     *
+     * @return Palauttaa suoraan tulostettavan kuvauksen oliosta
+     */
     @Override
     public String toString() {
         return time + "\tMatkamittarin lukema: " + odometer + " (Trip: " + lastTrip + " km)" + "\t" + driver + "; " + entryType;

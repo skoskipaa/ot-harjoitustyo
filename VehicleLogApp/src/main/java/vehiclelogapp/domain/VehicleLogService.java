@@ -18,12 +18,10 @@ public class VehicleLogService {
 
     private VehicleDao vehicleDao;
     private EntryDao entryDao;
-    //private String database;
     private DaoService daoService;
 
     public VehicleLogService(String database, String user, String pw) {
 
-        //this.database = database;
         this.entryDao = new EntryDao(database, user, pw);
         this.vehicleDao = new VehicleDao(database, user, pw);
         this.daoService = new DaoService(database, user, pw);
@@ -39,7 +37,7 @@ public class VehicleLogService {
      * @param licensePlate Lisättävän ajoneuvon rekisterinumero
      * @param kilometers Matkamittarin lukema
      * @return true, mikäli ajoneuvon lisääminen onnistuu, muuten false.
-     * @throws SQLException
+     * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
      */
     public boolean addVehicle(String licensePlate, int kilometers) throws SQLException {
         if (isNotValid(licensePlate)) {
@@ -68,7 +66,7 @@ public class VehicleLogService {
      * @param driver Kuljettajan nimi
      * @param entryType Tapahtumaan liittyvä selite
      * @return true, mikäli tapahtuman lisääminen onnistui, muuten false.
-     * @throws SQLException
+     * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
      */
     public boolean addEntry(String licensePlate, int km, String driver, String entryType) throws SQLException {
         if (isNotValid(licensePlate)) {
@@ -83,7 +81,6 @@ public class VehicleLogService {
         }
         int lastOdom = entryDao.latestOdometerForVehicle(vehicleId);
         int sum = km - lastOdom;
-        //System.out.println(km + "-" + lastOdom + "=" + sum );
         String dr = driver.toUpperCase().trim();
         Entry entryToAdd = new Entry(vehicleId, km, date, dr, entryType.toUpperCase(), sum);
         Entry e = entryDao.create(entryToAdd);
@@ -98,7 +95,7 @@ public class VehicleLogService {
      * Hakee järjestemästä kaikki sinne syötetyt ajoneuvot.
      *
      * @return Palauttaa ajoneuvojen rekisteritunnukset listana.
-     * @throws SQLException
+     * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
      */
     public ArrayList<String> listVehicles() throws SQLException {
         ArrayList<Vehicle> vehicles = vehicleDao.list();
@@ -117,7 +114,7 @@ public class VehicleLogService {
      * @see vehiclelogapp.domain.Entry#toString()
      * @param licensePlate Ajoneuvon rekisteritunnus
      * @return Palauttaa kaikki tapahtumat listana.
-     * @throws SQLException
+     * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
      */
     public ArrayList<String> listEntriesForVehicle(String licensePlate) throws SQLException {
         licensePlate = licensePlate.toUpperCase().trim();
@@ -138,8 +135,8 @@ public class VehicleLogService {
      * Hakee tapahtumat hakusanalla.
      *
      * @param key Hakusana
-     * @return Lista tapahtumista sekä yhteenlaskettu summa.
-     * @throws SQLException
+     * @return Lista tapahtumista sekä yhteenlaskettu matkojen summa.
+     * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
      */
     public ArrayList<String> searchEntries(String key) throws SQLException {
         String searchKey = key.toUpperCase();
@@ -163,7 +160,7 @@ public class VehicleLogService {
      *
      * @param licensePlate Haettavan ajoneuvon rekisteritunnus.
      * @return Kilometrilukema
-     * @throws SQLException
+     * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
      */
     public int getLatestOdometer(String licensePlate) throws SQLException {
         licensePlate = licensePlate.toUpperCase().trim();
@@ -180,7 +177,7 @@ public class VehicleLogService {
      *
      * @param licensePlate Tarkistettavan ajoneuvon rekisteritunnus
      * @return true, mikäli ajoneuvo löytyy, muuten false.
-     * @throws SQLException
+     * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
      */
     public boolean vehicleExists(String licensePlate) throws SQLException {
         licensePlate = licensePlate.toUpperCase().trim();

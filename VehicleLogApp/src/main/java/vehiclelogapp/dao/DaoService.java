@@ -25,12 +25,28 @@ public class DaoService {
 
     public DaoService() {
     }
-    
+
+    /**
+     * Luo yhteyden tietokantaan
+     *
+     * @param db tietokannan nimi
+     * @param user käyttäjänimi
+     * @param pwd salasana
+     * @return Palauttaa Connection-olion tietokantayhteyden käyttöä varten.
+     * @throws SQLException Heittää SQL-poikkeuksen, jos epäonnistuu
+     */
     public Connection getDbConnection(String db, String user, String pwd) throws SQLException {
         Connection conn = DriverManager.getConnection(db, user, pwd);
         return conn;
     }
 
+    /**
+     * Tietokannan luominen, mikäli sitä ei ole olemassa
+     *
+     * @param database tietokantatiedoston nimi
+     * @param user käyttäjänimi
+     * @param pw salasana
+     */
     private static void setUpDatabase(String database, String user, String pw) {
 
         try (Connection conn = DriverManager.getConnection(database, user, pw)) {
