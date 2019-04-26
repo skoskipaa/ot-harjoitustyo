@@ -20,5 +20,6 @@
 |16.4.2019  |5  |Testien kirjoitusta, bugien korjausta, käyttöliittymän muokkausta|
 |21.4.2019  |5  |Hakutoiminnon lisäys, koodin refaktorointia  |
 |24.4.2019  |1  |Käyttöohje |
+|26.4.2019  |3  |Arkkitehtuurikuvauksen laajennus, JavaDocin täydennys |
 
-Yhteensä 47 tuntia
+Yhteensä 50 tuntia
