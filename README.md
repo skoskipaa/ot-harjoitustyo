@@ -19,18 +19,19 @@ Sovellus käyttää h2-tietokannanhallintajärjestelmää ja sen tietokanta luod
 ## Komentorivitoiminnot
 
 Testit voidaan ajaa komennolla
-*mvn test*
+**mvn test**
 
 Testikattavuusraportti on mahdollista luoda komennolla
-*mvn test jacoco:report*
+**mvn test jacoco:report**
 
 Checkstyle voidaan suorittaa komennolla
-*mvn jxr:jxr checkstyle:checkstyle*
+**mvn jxr:jxr checkstyle:checkstyle**
 
 Ohjelma voidaan suorittaa komentoriviltä komennolla
-*mvn compile exec:java -Dexec.mainClass=vehiclelogapp.ui.Main*
+**mvn compile exec:java -Dexec.mainClass=vehiclelogapp.ui.Main**
 
 Suoritettava jar-tiedosto (VehicleLogApp-1.0-SNAPSHOT.jar) luodaan target-hakemistoon komennolla
-*mvn package*
+**mvn package**
 
+(Ohjelmaa suoritettaessa suoritushakemistosta tulee myös löytyä tiedosto *config.properties*.)
 
