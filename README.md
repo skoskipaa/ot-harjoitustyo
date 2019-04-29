@@ -12,6 +12,8 @@ Sovellus käyttää h2-tietokannanhallintajärjestelmää ja sen tietokanta luod
 
 [Arkkitehtuurikuvaus](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
 
+[Testausdokumentti](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/testausdokumentti.md)
+
 ## Releaset
 
 [Viikko 5](https://github.com/skoskipaa/ot-harjoitustyo/releases/tag/viikko5)
