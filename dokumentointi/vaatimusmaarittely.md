@@ -1,37 +1,39 @@
-# Projektin alustava vaatimusmäärittely
+# Vaatimusmäärittely
 ## Sovelluksen tarkoitus
 Tarkoituksena on luoda ajopäiväkirjasovellus esimerkiksi pienyritykselle muutaman ajoneuvon 
-ajokilometrien, ajojen tarkoituksen ja mahdollisesti myös huoltojen ja katsastusten seurantaan. 
+ajokilometrien, ajojen tarkoituksen ja muiden ajoneuvoihin liittyvien tapahtumien kirjaamiseen ja seurantaan. 
 Sovellukseen on mahdollista syöttää useamman auton tietoja ja sillä voi olla useita käyttäjiä.
 
 ## Käyttäjät
-Alkuvaiheessa sovelluksen käyttäjillä on vain yksi rooli, peruskäyttäjä, eli kuka tahansa voi syöttää 
-sovellukseen uuden ajoneuvon ja kirjata sovellukseen ajotapahtumia. Myöhemmin sovellukseen voidaan lisätä 
-pääkäyttäjä, jonka vastuulla on uusien ajoneuvojen syöttäminen. Tällöin sovellukseen lisätään myös 
-kirjautuminen, jotta eri käyttäjäroolien ylläpito on mahdollista.
+Sovelluksen käyttäjillä on vain yksi rooli, peruskäyttäjä, eli kuka tahansa voi syöttää 
+sovellukseen uuden ajoneuvon ja kirjata sovellukseen ajotapahtumia sekä tehdä hakuja.
 
 ## Käyttöliittymä
-Sovellukseen tulee graafinen käyttöliittymä, joka sisältää kolme näkymää: päävalikon, uuden ajoneuvon 
-syöttönäkymän ja tapahtuman syöttönäkymän. Päävalikossa on myös mahdollista listata ajoneuvon 
-tapahtumahistoria.
+Sovelluksessa on graafinen käyttöliittymä, joka sisältää neljä näkymää: päävalikon, uuden ajoneuvon 
+syöttönäkymän, tapahtuman syöttönäkymän sekä hakunäkymän. Ajoneuvon tapahtumalistaus, kaikkien järjestelmän ajoneuvojen listaus sekä haun tulokset tulostuvat erilliseen ikkunaan.
 
 ## Toimintaympäristö
-Sovellus toimii Linux- ja OSX-käyttöjärjestelmillä. Sovelluksen tiedot tallennetaan paikallisesti koneen
-levylle tiedostoon tai tietokantaan.
+Sovellus toimii Linux- ja OSX-käyttöjärjestelmillä. Sovelluksen tiedot tallennetaan paikallisesti levylle tietokantaan käyttäen h2-tietokannanhallintajärjestelmää.
 
 ## Perusversion toiminnallisuus
 Käyttäjä voi
 * Lisätä järjestelmään uuden ajoneuvon. Ajoneuvosta syötetään rekisteritunnus ja ajokilometrit.
-* Lisätä uuden ajotapahtuman. Tapahtumaan syötetään ajokilometrit, ajon tarkoitus ja kuljettaja.
+* Lisätä uuden ajotapahtuman. Tapahtumaan syötetään matkamittarin lukema ajon päättyessä, ajon tarkoitus ja kuljettaja.
 * Listata ajoneuvon tapahtumahistorian.
+* Hakea ajotapahtumia vapaalla sanahaulla, eli esimerkiksi ajon tyypin tai laskutettavan asiakkaan perusteella. Ajoista lasketaan haun yhteydessä myös kilometrien summa.
 
 ## Jatkokehitys
-Aikataulun salliessa sovellukseen voidaan lisätä seuraavat toiminnallisuudet:
-* Erilaisten huoltotapahtumien kirjaaminen
-* Tulevien tapahtumien (kuten katsastukset tai määräaikaishuollot) kirjaaminen
-* Tulevista tapahtumista muistuttaminen
+
+Jatkossa sovellukseen voidaan lisätä myös esimerkiksi seuraavat toiminnallisuudet:
 * Kirjautuminen
 * Käyttäjäroolien lisääminen
-* Ajojen tulostus esimerkiksi laskutettavan asiakkaan perusteella
+* Tapahtuma-ajan muokkausmahdollisuus, alku- ja loppuaika erikseen
+* Tapahtuman muokkausmahdollisuus jälkikäteen, esim. virheellisen syötön korjaus
+* Haun monipuolistaminen (esim. kuljettajan perusteella)
+* Alias-nimen lisääminen ajoneuvolle (käytettävyyden kannalta helpompi muistaa kuin rekisteritunnus)
+* Tulevien tapahtumien (kuten katsastukset tai määräaikaishuollot) kirjaaminen
+* Tulevista tapahtumista muistuttaminen
+
+
 
 
