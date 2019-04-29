@@ -22,5 +22,6 @@
 |24.4.2019  |1  |Käyttöohje |
 |26.4.2019  |3  |Arkkitehtuurikuvauksen laajennus, JavaDocin täydennys |
 |26.7.2019  |1  |Testausta  |
+|29.4.2019  |1.5  |Dokumentointia: testausdokumentin aloitus, vaatimusmäärittelyn päivitys |
 
-Yhteensä 51 tuntia
+Yhteensä 52.5 tuntia
