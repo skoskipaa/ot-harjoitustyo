@@ -56,4 +56,6 @@ Dao-pakkauksen luokkien metodeissa on edelleen runsaasti toisteisuutta. Tätä v
 
 Koska käsiteltävä tietomäärä ei ole toistaiseksi suuri, tietokantahakuja voisi yksinkertaistaa jättämällä tietokantahakutulosten lajittelun ja rajauksen sovelluslogiikan vastuulle. Tällöin ylimääräiset rajatun haun metodit voisi poistaa erityisesti EntryDao-luokasta.
 
+Syötteiden validointia tehdään sekä käyttöliittymässä että sovelluslogiikassa. Käyttäjälle saadaan annettua selkeämmät ja tarkemmat virheilmoitukset, kun validointia tehdään käyttöliittymässä, mutta aiheuttaa päällekkäisyyttä.
+
 
