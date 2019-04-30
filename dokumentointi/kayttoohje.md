@@ -5,15 +5,15 @@
 Lataa tiedosto [vehiclelogapp.jar](https://github.com/skoskipaa/ot-harjoitustyo/releases/tag/viikko6).
 Käynnistyshakemistossa tulee olla myös tiedosto [config.properties](https://github.com/skoskipaa/ot-harjoitustyo/releases/tag/viikko6), jossa määritellään käytettävä tietokantatiedosto. Oletustiedoston sisältö on seuraava:
 
-database=jdbc:h2:./logbook
-user=sa
-password=
+database=jdbc:h2:./logbook  
+user=sa  
+password=  
 
 Tietokantatiedoston nimi on siis oletuksena *logbook*, käyttäjänimi *sa* ja salasana tyhjä. Nämä voi halutessaan määritellä konfigurointitiedostoon itse.
 
 ## Ohjelman käynnistäminen
 
-Ohjelma kynnistetään komentoriviltä komennolla
+Ohjelma käynnistetään komentoriviltä komennolla  
 **java -jar VehicleLogApp.jar**
 
 
