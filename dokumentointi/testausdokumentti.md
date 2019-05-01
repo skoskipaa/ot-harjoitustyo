@@ -14,6 +14,8 @@ EntryTest ja VehicleTest sisältävät yksikkötestejä luokille Entry ja Vehicl
 ### Testauskattavuus
 Sovelluksen testauksen rivikattavuus on 89% ja haarautumakattavuus 84%. Käyttöliittymäkerros jätettiin pois automaattisen testauksen piiristä, eli käyttöliittymää testattiin manuaalisesti.
 
+<img src="https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kuvat/testaus.png">
+
 Koska DAO-luokkia testattiin sovelluslogiikan kautta eikä suoraan, testaamatta jäi haarautumia, joihin olisi päädytty esimerkiksi tietokantasyötön epäonnistumisesta tai tietokannan virheellisestä luomisesta johtuen.
 
 ## Järjestelmätestaus
