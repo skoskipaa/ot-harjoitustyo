@@ -19,7 +19,6 @@ Sovelluksen testauksen rivikattavuus on 89% ja haarautumakattavuus 84%. Käyttö
 Koska DAO-luokkia testattiin sovelluslogiikan kautta eikä suoraan, testaamatta jäi haarautumia, joihin olisi päädytty esimerkiksi tietokantasyötön epäonnistumisesta tai tietokannan virheellisestä luomisesta johtuen.
 
 ## Järjestelmätestaus
-Järjestelmätestaus on toteutettu manuaalisesti. Järjestelmätestauksessa testattiin ohjelman käytettävyyttä, luotettavuutta ja syötteiden validointia.
 
 ### Asennus ja konfigurointi
 Sovelluksen asennusta ja konfigurointia on testattu OSX-ympäristössä käyttöohjeessa esitetyllä tavalla asentamalla sovellus ja sen vaatima config.properties-tiedosto. Sovellusta on testattu ja se toimii tilanteissa, joissa tietokantatiedostoa ei ole vielä olemassa (ensimmäinen käynnistyskerta) sekä tilanteissa, joissa tietokantatiedosto on olemassa.
