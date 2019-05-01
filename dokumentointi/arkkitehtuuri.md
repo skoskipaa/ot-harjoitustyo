@@ -42,7 +42,7 @@ Sovelluslogiikan toimintaa kuvaa sekvenssikaavio ajoneuvon tapahtumien listaukse
 
 Graafisessa käyttöliittymässä tapahtumankäsettelijä reagoi listEntries-napin painamiseen kutsumalla sovelluslogiikan metodia listEntriesForVehicle(), joka saa parametrikseen valikosta valitun ajoneuvon rekisteritunnuksen. VehicleLogService kutsuu ensin VehicleDaon metodia getVehicleId(), ja sitten VehicleDaon palauttamalla id:llä EntryDaon metodia getEntriesForVehicle(), joka palauttaa VehicleLogServicelle listan Entry-olioita. Sovelluslogiikka muuntaa listan Stringeiksi (Entry-luokan toString()-metodilla) ja paluttaa listan käyttöliittymälle, joka näyttää tulokset käyttäjälle uudessa ikkunassa.
 
-Sovelluksen muidenkin toiminnallisuuksien toimintalogiikka on samankaltainen. Käyttöliittymä reagoi käyttäjän pyyntöihin ja kutsuu sovelluslogiikkaa. Sovelluslogiikka toteuttaa pyynnön tallennusluokkia hyväksikäyttäen ja palauttaa käyttäjälle näytettävön sisällön käyttöliittymällä, joka tulostaa sen.
+Sovelluksen muidenkin toiminnallisuuksien toimintalogiikka on samankaltainen. Käyttöliittymä reagoi käyttäjän pyyntöihin ja kutsuu sovelluslogiikkaa. Sovelluslogiikka toteuttaa pyynnön tallennusluokkia hyväksikäyttäen ja palauttaa käyttäjälle näytettävän sisällön käyttöliittymälle, joka tulostaa sen.
 
 ## Tietojen tallennus
 
