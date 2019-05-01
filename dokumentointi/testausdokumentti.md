@@ -12,12 +12,9 @@ Sovelluslogiikkaa testattiin integraatiotestein luokalla VehicleLogServiceTest. 
 EntryTest ja VehicleTest sisältävät yksikkötestejä luokille Entry ja Vehicle.
 
 ### Testauskattavuus
-Sovelluksen testauksen rivikattavuus on 89% ja haarautumakattavuus 78%. Käyttöliittymäkerros jätettiin pois automaattisen testauksen piiristä, eli käyttöliittymää testattiin manuaalisesti.
+Sovelluksen testauksen rivikattavuus on 89% ja haarautumakattavuus 84%. Käyttöliittymäkerros jätettiin pois automaattisen testauksen piiristä, eli käyttöliittymää testattiin manuaalisesti.
 
-Koska DAO-luokkia testattiin sovelluslogiikan kautta eikä suoraan, testaamatta jäi haarautumia, jotka olisivat johtuneet esimerkiksi tietokantasyötön epäonnistumisesta tai tietokannan virheellisestä luomisesta.
-
-
-
+Koska DAO-luokkia testattiin sovelluslogiikan kautta eikä suoraan, testaamatta jäi haarautumia, joihin olisi päädytty esimerkiksi tietokantasyötön epäonnistumisesta tai tietokannan virheellisestä luomisesta johtuen.
 
 ## Järjestelmätestaus
 Järjestelmätestaus on toteutettu manuaalisesti. Järjestelmätestauksessa testattiin ohjelman käytettävyyttä, luotettavuutta ja syötteiden validointia.
