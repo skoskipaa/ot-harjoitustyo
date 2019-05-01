@@ -55,7 +55,7 @@ public class VehicleLogServiceTest {
     public void cannotAddEntryWithoutVehicle() throws SQLException {
         assertFalse(testService.addEntry("HJK77", 0, "JJ", "nn"));
     }
-    
+
     @Test
     public void cannotAddEntryWithoutLp() throws SQLException {
         assertFalse(testService.addEntry("", 0, "JJ", "nn"));
@@ -102,13 +102,36 @@ public class VehicleLogServiceTest {
         assertTrue(!res.isEmpty());
 
     }
-    
-    
 
-//    @Test
-//    public void odometerOkAfterEntry() throws SQLException {
-//        testService.addVehicle("JJ99", 0);
-//        testService.addEntry("JJ99", 15, "JJ", "nn");
-//        assertEquals(15, testService.getLatestOdometer("JJ99"));
-//    }
+    @Test
+    public void searchWorks2() throws SQLException {
+        testService.addVehicle("HEL0", 1);
+        testService.addEntry("HEL0", 15, "Jonne", "hupi");
+        ArrayList<String> res = testService.searchEntries("bbbb");
+        assertTrue(res.isEmpty());
+    }
+
+    @Test
+    public void searchWorks3() throws SQLException {
+        testService.addVehicle("HEL0", 1);
+        testService.addEntry("HEL0", 15, "Jonne", "hupi");
+        ArrayList<String> res = testService.searchEntries("");
+        assertTrue(res.isEmpty());
+    }
+
+    @Test
+    public void latestOdoZero() throws SQLException {
+        assertEquals(0, testService.getLatestOdometer("JEE5"));
+    }
+
+    @Test
+    public void isNotEmpty() {
+        boolean empty = VehicleLogService.isNotValid("");
+        assertTrue(empty);
+        boolean notEmpty = VehicleLogService.isNotValid("abc");
+        assertFalse(notEmpty);
+        empty = VehicleLogService.isNotValid(" ");
+        assertTrue(empty);
+
+    }
 }

@@ -17,9 +17,6 @@ public class Entry {
     private String entryType;
     private int lastTrip;
 
-    public Entry() {
-    }
-
     public Entry(int id, Integer vehicleId, int odometer, Timestamp time, String driver, String entryType, int lastTrip) {
         this.id = id;
         this.vehicleId = vehicleId;
@@ -109,7 +106,8 @@ public class Entry {
      */
     @Override
     public String toString() {
-        return time + "\tMatkamittarin lukema: " + odometer + " (Trip: " + lastTrip + " km)" + "\t" + driver + "; " + entryType;
+        return time + "\tMatkamittarin lukema: " + odometer + " (Trip: " + lastTrip + " km)" + "\t"
+                + driver + "; " + entryType;
     }
 
 }

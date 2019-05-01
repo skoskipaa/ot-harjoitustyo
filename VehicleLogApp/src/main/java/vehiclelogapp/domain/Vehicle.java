@@ -12,9 +12,6 @@ public class Vehicle {
     private String licensePlate;
     private int kilometers;
 
-    public Vehicle() {
-    }
-
     public Vehicle(String licensePlate, int kilometers) {
         this.licensePlate = licensePlate;
         this.kilometers = kilometers;

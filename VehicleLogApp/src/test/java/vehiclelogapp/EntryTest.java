@@ -13,80 +13,60 @@ import vehiclelogapp.domain.Entry;
 public class EntryTest {
 
     private Entry entry;
+    private Entry entry1;
     private Entry entry2;
-    private Entry entry3;
 
     @Before
     public void setUp() {
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
 
-        entry = new Entry();
-        entry2 = new Entry(1, 1, 13000, date, "Pekka", "Kuljetus", 0);
-        entry3 = new Entry(1, 13500, date, "Jukka", "Huolto", 0);
+        entry1 = new Entry(1, 1, 13000, date, "Pekka", "Kuljetus", 0);
+        entry2 = new Entry(2, 13500, date, "Jukka", "Huolto", 0);
 
     }
 
     @Test
     public void constructorsOk() {
-        assertTrue(entry != null && entry2 != null && entry3 != null);
+        assertTrue(entry1 != null && entry2 != null);
     }
 
     @Test
     public void getId() {
-        assertEquals(1, entry2.getId());
+        assertEquals(1, entry1.getId());
     }
 
     @Test
     public void setId() {
-        entry3.setId(2);
-        assertEquals(2, entry3.getId());
+        entry2.setId(5);
+        assertEquals(5, entry2.getId());
     }
 
     @Test
     public void getVehicleId() {
         Integer res = 1;
-        assertEquals(res, entry2.getVehicleId());
-    }
-
-    @Test
-    public void setVehicleId() {
-        entry.setVehicleId(3);
-        Integer res = 3;
-        assertEquals(res, entry.getVehicleId());
+        assertEquals(res, entry1.getVehicleId());
     }
 
     @Test
     public void getOdometer() {
-        assertEquals(13500, entry3.getOdometer());
+        assertEquals(13500, entry2.getOdometer());
     }
 
     @Test
     public void setOdometer() {
-        entry3.setOdometer(14000);
-        assertEquals(14000, entry3.getOdometer());
+        entry2.setOdometer(14000);
+        assertEquals(14000, entry2.getOdometer());
     }
 
     @Test
     public void getDriverOk() {
-        String res = entry3.getDriver();
+        String res = entry2.getDriver();
         assertEquals("Jukka", res);
     }
 
     @Test
-    public void setDriverOk() {
-        entry.setDriver("Pirjo");
-        assertEquals("Pirjo", entry.getDriver());
-    }
-
-    @Test
-    public void entryType() {
-        entry.setEntryType("Huolto");
-        assertEquals("Huolto", entry.getEntryType());
-    }
-
-    @Test
     public void getEntryType() {
-        assertEquals("Kuljetus", entry2.getEntryType());
+        assertEquals("Kuljetus", entry1.getEntryType());
     }
 
 }

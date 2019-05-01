@@ -53,7 +53,7 @@ public class VehicleLogService {
         if (v == null) {
             return false;
         } else {
-            addEntry(licensePlate, kilometers, "admin", "aloitussyöttö");
+            addEntry(licensePlate, kilometers, "admin", "");
         }
         return true;
     }
@@ -139,6 +139,9 @@ public class VehicleLogService {
      * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
      */
     public ArrayList<String> searchEntries(String key) throws SQLException {
+        if (isNotValid(key)) {
+            return new ArrayList<>();
+        }
         String searchKey = key.toUpperCase();
         ArrayList<Entry> entries = entryDao.listEntriesByType(searchKey);
         if (entries.isEmpty()) {

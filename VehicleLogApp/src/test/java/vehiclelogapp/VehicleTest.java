@@ -21,12 +21,6 @@ public class VehicleTest {
     }
 
     @Test
-    public void emptyComstructor() {
-        Vehicle v = new Vehicle();
-        assertTrue(v != null);
-    }
-
-    @Test
     public void vehicleExists() {
         assertTrue(vehicle != null && vehicle2 != null);
 
