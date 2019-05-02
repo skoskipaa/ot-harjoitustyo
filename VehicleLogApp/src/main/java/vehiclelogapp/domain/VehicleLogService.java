@@ -1,7 +1,5 @@
 package vehiclelogapp.domain;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -20,6 +18,13 @@ public class VehicleLogService {
     private EntryDao entryDao;
     private DaoService daoService;
 
+    /**
+     * Konstruktori
+     *
+     * @param database tietokantatiedoston nimi
+     * @param user tiedoston käyttäjänimi
+     * @param pw tiedoston salasana
+     */
     public VehicleLogService(String database, String user, String pw) {
 
         this.entryDao = new EntryDao(database, user, pw);
@@ -53,9 +58,8 @@ public class VehicleLogService {
         if (v == null) {
             return false;
         } else {
-            addEntry(licensePlate, kilometers, "admin", "");
+            return addEntry(licensePlate, kilometers, "admin", "");
         }
-        return true;
     }
 
     /**
@@ -73,28 +77,28 @@ public class VehicleLogService {
             return false;
         }
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
-        licensePlate = licensePlate.toUpperCase().trim();
-
-        Integer vehicleId = vehicleDao.getVehicleId(licensePlate);
+        Integer vehicleId = getId(licensePlate);
         if (vehicleId == null) {
             return false;
         }
         int lastOdom = entryDao.latestOdometerForVehicle(vehicleId);
         int sum = km - lastOdom;
-        String dr = driver.toUpperCase().trim();
-        Entry entryToAdd = new Entry(vehicleId, km, date, dr, entryType.toUpperCase(), sum);
+
+        if (lastOdom == 0) {
+            sum = 0;
+        }
+
+        Entry entryToAdd = new Entry(vehicleId, km, date, driver.toUpperCase().trim(),
+                entryType.toUpperCase(), sum);
         Entry e = entryDao.create(entryToAdd);
 
-        if (e == null) {
-            return false;
-        }
-        return true;
+        return e != null;
     }
 
     /**
-     * Hakee järjestemästä kaikki sinne syötetyt ajoneuvot.
+     * Hakee järjestelmästä kaikki sinne syötetyt ajoneuvot.
      *
-     * @return Palauttaa ajoneuvojen rekisteritunnukset listana.
+     * @return Palauttaa ajoneuvojen rekisteritunnukset merkkijonolistana.
      * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
      */
     public ArrayList<String> listVehicles() throws SQLException {
@@ -113,12 +117,11 @@ public class VehicleLogService {
      *
      * @see vehiclelogapp.domain.Entry#toString()
      * @param licensePlate Ajoneuvon rekisteritunnus
-     * @return Palauttaa kaikki tapahtumat listana.
+     * @return Palauttaa kaikki tapahtumat merkkijonolistana.
      * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
      */
     public ArrayList<String> listEntriesForVehicle(String licensePlate) throws SQLException {
-        licensePlate = licensePlate.toUpperCase().trim();
-        Integer vehicleId = vehicleDao.getVehicleId(licensePlate);
+        Integer vehicleId = getId(licensePlate);
         if (vehicleId == null) {
             return null;
         }
@@ -186,13 +189,15 @@ public class VehicleLogService {
         licensePlate = licensePlate.toUpperCase().trim();
         Integer vehicleId = vehicleDao.getVehicleId(licensePlate);
 
-        if (vehicleId == null) {
-            return false;
-        }
-
-        return true;
+        return vehicleId != null;
     }
 
+    /**
+     * Apumetodi, joka tarkistaa, että merkkijono on luku
+     *
+     * @param s tarkistettava merkkijono
+     * @return true, mikäli merkkijono on luku, muulloin false
+     */
     public static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
@@ -204,7 +209,27 @@ public class VehicleLogService {
         return true;
     }
 
+    /**
+     * Apumetodi, joka tarkistaa, ettei rekisteritunnus ole tyhjä. Muuten
+     * tunnuksella ei ole rajoituksia muodon suhteen.
+     *
+     * @param s tarkistettava merkkijono
+     * @return true, mikäli merkkijono on tyhjä, muulloin false
+     */
     public static boolean isNotValid(String s) {
         return (s.isEmpty() || s.equals(" "));
     }
+
+    /**
+     * Apumetodi, joka hakee ajoneuvon id:n
+     *
+     * @param lp ajoneuvon rekisteritunnus
+     * @return ajoneuvon id
+     * @throws SQLException mikäli tietokantahaku epäonnistuu
+     */
+    public Integer getId(String lp) throws SQLException {
+        lp = lp.toUpperCase().trim();
+        return vehicleDao.getVehicleId(lp);
+    }
+
 }

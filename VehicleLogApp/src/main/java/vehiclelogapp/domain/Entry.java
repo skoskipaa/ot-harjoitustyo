@@ -1,7 +1,6 @@
 package vehiclelogapp.domain;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 /**
  * Ajoneuvolle syötettävää tapahtumaa kuvaava luokka.
@@ -17,6 +16,17 @@ public class Entry {
     private String entryType;
     private int lastTrip;
 
+    /**
+     * Tietokannan käyttämä konstruktori.
+     * 
+     * @param id    automaattisesti luotava tapahtuman yksilöivä id 
+     * @param vehicleId automaattisesti tietokannan hakema ajoneuvon tapahtumalle yksilöivä id
+     * @param odometer  matkamittarin lukema
+     * @param time  tapahtuman aika
+     * @param driver    kuljettaja
+     * @param entryType tapahtuman selite
+     * @param lastTrip  matkamittarin edellinen lukema
+     */
     public Entry(int id, Integer vehicleId, int odometer, Timestamp time, String driver, String entryType, int lastTrip) {
         this.id = id;
         this.vehicleId = vehicleId;
@@ -26,7 +36,17 @@ public class Entry {
         this.entryType = entryType;
         this.lastTrip = lastTrip;
     }
-
+    
+    /**
+     * VehicleLogservicen tietokantaan tallennuksessa käyttämä konstruktori
+     * 
+     * @param vehicleId ajoneuvon yksilöivä id (haetaan tietokannasta)
+     * @param odometer  matkamittarin lukema
+     * @param time  tapahtuman aika (luodaan automaattisesti)
+     * @param driver    kuljettaja
+     * @param entryType tapahtuman selite
+     * @param lastTrip  matkamittarin edellinen lukema
+     */
     public Entry(Integer vehicleId, int odometer, Timestamp time, String driver, String entryType, int lastTrip) {
         this.vehicleId = vehicleId;
         this.odometer = odometer;
@@ -36,6 +56,12 @@ public class Entry {
         this.lastTrip = lastTrip;
     }
 
+    /**
+     * VehicleLogServicen käyttämä konstruktori käyttäjän syötteiden käsittelyyn.
+     * @param odometer
+     * @param driver
+     * @param entryType 
+     */
     public Entry(int odometer, String driver, String entryType) {
 
         this.odometer = odometer;

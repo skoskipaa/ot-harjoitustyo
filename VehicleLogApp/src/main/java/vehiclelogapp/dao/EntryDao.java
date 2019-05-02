@@ -1,7 +1,6 @@
 package vehiclelogapp.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -62,7 +61,7 @@ public class EntryDao implements Dao<Entry, Integer> {
             return null;
         }
         Entry returnEntry = new Entry(rs.getInt("id"), rs.getInt("vehicle_id"), rs.getInt("odometerread"),
-                rs.getTimestamp("date"), rs.getString("driver"), rs.getString("type"), rs.getInt("last_trip")); /////////////
+                rs.getTimestamp("date"), rs.getString("driver"), rs.getString("type"), rs.getInt("last_trip"));
 
         stmt.close();
         rs.close();
@@ -73,15 +72,12 @@ public class EntryDao implements Dao<Entry, Integer> {
     @Override
     public ArrayList<Entry> list() throws SQLException {
         Connection conn = service.getDbConnection(databaseUrl, user, password);
-
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Entry");
         ResultSet rs = stmt.executeQuery();
-
         ArrayList<Entry> entries = new ArrayList<>();
-
         while (rs.next()) {
             Entry toAdd = new Entry(rs.getInt("id"), rs.getInt("vehicle_id"), rs.getInt("odometerread"),
-                    rs.getTimestamp("date"), rs.getString("driver"), rs.getString("type"), rs.getInt("last_trip")); //////////
+                    rs.getTimestamp("date"), rs.getString("driver"), rs.getString("type"), rs.getInt("last_trip"));
             entries.add(toAdd);
         }
         stmt.close();

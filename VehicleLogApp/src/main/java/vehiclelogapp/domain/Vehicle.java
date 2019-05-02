@@ -1,7 +1,5 @@
 package vehiclelogapp.domain;
 
-import java.util.ArrayList;
-
 /**
  * Ajoneuvoa kuvaava luokka.
  *
@@ -11,12 +9,25 @@ public class Vehicle {
     private int id;
     private String licensePlate;
     private int kilometers;
-
+    
+    /**
+     * VehicleLogServicen käyttämä konstruktori.
+     * 
+     * @param licensePlate  ajoneuvon rekisteritunnus
+     * @param kilometers    ajoneuvon matkamittarin lukema
+     */
     public Vehicle(String licensePlate, int kilometers) {
         this.licensePlate = licensePlate;
         this.kilometers = kilometers;
     }
 
+    /**
+     * Tietokannan käyttämä konstruktori.
+     * 
+     * @param id    automaattisesti tietokantaan luotava yksilöivä id
+     * @param licensePlate  ajoneuvon rekisteritunnus
+     * @param kilometers    ajoneuvon matkamittarin lukema
+     */
     public Vehicle(int id, String licensePlate, int kilometers) {
         this.id = id;
         this.licensePlate = licensePlate;

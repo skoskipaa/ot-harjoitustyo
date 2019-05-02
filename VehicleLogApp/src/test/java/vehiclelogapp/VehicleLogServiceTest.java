@@ -35,7 +35,7 @@ public class VehicleLogServiceTest {
     }
 
     @Test
-    public void vehicleExists() throws SQLException {
+    public void vehicleExistsFalse() throws SQLException {
         assertFalse(testService.vehicleExists("AAA111"));
     }
 
@@ -52,7 +52,7 @@ public class VehicleLogServiceTest {
     }
 
     @Test
-    public void cannotAddEntryWithoutVehicle() throws SQLException {
+    public void cannotAddEntryWithoutExistingVehicle() throws SQLException {
         assertFalse(testService.addEntry("HJK77", 0, "JJ", "nn"));
     }
 
@@ -82,7 +82,7 @@ public class VehicleLogServiceTest {
     }
 
     @Test
-    public void canNotAddWithoutLicensePlate() throws SQLException {
+    public void canNotAddVehicleWithoutLicensePlate() throws SQLException {
         assertFalse(testService.addVehicle("", 0));
     }
 
