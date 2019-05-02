@@ -1,7 +1,7 @@
 # VehicleLogApp
 Sovelluksen avulla on mahdollista ylläpitää ajopäiväkirjaa usealle ajoneuvolle. Sovellukseen voi lisätä ajoneuvoja ja ajotapahtumia sekä listata näitä.
 
-Sovellus käyttää h2-tietokannanhallintajärjestelmää ja sen tietokanta luodaan tiedostoon logbook.mv.db.
+Sovellus käyttää h2-tietokannanhallintajärjestelmää ja luo sitä varten tietokannan tiedostoon, joka määritellään konfiguraatiotiedostossa.
 
 ## Dokumentaatio
 [Käyttöohje](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kayttoohje.md)
