@@ -24,26 +24,26 @@ Sovellus käyttää h2-tietokannanhallintajärjestelmää ja luo sitä varten ti
 
 ### Testaus
 
-Testit voidaan suorittaa komennolla **mvn test**
+Testit voidaan suorittaa komennolla **mvn test**  
 
-Testikattavuusraportti on mahdollista luoda komennolla **mvn test jacoco:report**
+Testikattavuusraportti on mahdollista luoda komennolla **mvn test jacoco:report**  
 Raportti löytyy tiedostosta *target/site/jacoco/index.html*
 
 ### Checkstyle
 
-Checkstyle voidaan suorittaa komennolla **mvn jxr:jxr checkstyle:checkstyle**
+Checkstyle voidaan suorittaa komennolla **mvn jxr:jxr checkstyle:checkstyle**  
 Raportti löytyy tiedostosta *target/site/checkstyle.html*
 
 ### JavaDoc
 
-JavaDoc voidaan luoda komennolla **mvn javadoc:javadoc**
+JavaDoc voidaan luoda komennolla **mvn javadoc:javadoc**  
 Luotu JavaDoc löytyy tiedostosta *target/site/apidocs/index.html*
 
 ### Ohjelman suoritus
 
-Ohjelma voidaan suorittaa komentoriviltä komennolla **mvn compile exec:java -Dexec.mainClass=vehiclelogapp.ui.Main**
+Ohjelma voidaan suorittaa komentoriviltä komennolla **mvn compile exec:java -Dexec.mainClass=vehiclelogapp.ui.Main**  
 
-Suoritettava jar-tiedosto (VehicleLogApp-1.0-SNAPSHOT.jar) luodaan target-hakemistoon komennolla **mvn package**
+Suoritettava jar-tiedosto (VehicleLogApp-1.0-SNAPSHOT.jar) luodaan target-hakemistoon komennolla **mvn package**  
 Suoritushakemistosta tulee löytyä myös tiedosto *config.properties*, joka sisältää tietokantatiedoston määrittelyn.
 
 
