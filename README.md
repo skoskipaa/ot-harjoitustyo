@@ -20,6 +20,8 @@ Sovellus käyttää h2-tietokannanhallintajärjestelmää ja luo sitä varten ti
 
 [Viikko 6](https://github.com/skoskipaa/ot-harjoitustyo/releases/tag/viikko6)
 
+[loppupalautus](https://github.com/skoskipaa/ot-harjoitustyo/releases/tag/viikko7)
+
 ## Komentorivitoiminnot
 
 ### Testaus
