@@ -12,7 +12,7 @@ Sovelluslogiikkaa testattiin integraatiotestein luokalla VehicleLogServiceTest. 
 EntryTest ja VehicleTest sisältävät yksikkötestejä luokille Entry ja Vehicle.
 
 ### Testauskattavuus
-Sovelluksen testauksen rivikattavuus on 89% ja haarautumakattavuus 84%. Käyttöliittymäkerros jätettiin pois automaattisen testauksen piiristä, eli käyttöliittymää testattiin manuaalisesti.
+Sovelluksen testauksen rivikattavuus on 90% ja haarautumakattavuus 84%. Käyttöliittymäkerros jätettiin pois automaattisen testauksen piiristä, eli käyttöliittymää testattiin manuaalisesti.
 
 <img src="https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kuvat/testaus.png">
 
