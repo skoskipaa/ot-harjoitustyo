@@ -41,7 +41,8 @@ Luotu JavaDoc löytyy tiedostosta *target/site/apidocs/index.html*
 
 ### Ohjelman suoritus
 
-Ohjelma voidaan suorittaa komentoriviltä komennolla **mvn compile exec:java -Dexec.mainClass=vehiclelogapp.ui.Main**  
+Ohjelma voidaan suorittaa komentoriviltä komennolla  
+**mvn compile exec:java -Dexec.mainClass=vehiclelogapp.ui.Main**  
 
 Suoritettava jar-tiedosto (VehicleLogApp-1.0-SNAPSHOT.jar) luodaan target-hakemistoon komennolla **mvn package**  
 Suoritushakemistosta tulee löytyä myös tiedosto *config.properties*, joka sisältää tietokantatiedoston määrittelyn.
