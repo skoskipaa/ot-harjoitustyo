@@ -9,7 +9,7 @@ database=jdbc:h2:./logbook
 user=sa  
 password=  
 
-Tietokantatiedoston nimi on siis oletuksena *logbook*, käyttäjänimi *sa* ja salasana tyhjä. Nämä voi halutessaan määritellä konfigurointitiedostoon itse.
+Tietokantatiedoston nimi on siis oletuksena *logbook*, käyttäjänimi *sa* ja salasana tyhjä. Nämä voi halutessaan määritellä konfigurointitiedostoon itse. Mikäli käyttäjänimeä tai salasanaa muutetaan tiedostossa tietokannan luomisen jälkeen, ohjelman suoritus keskeytyy. Mikäli tiedostoon määritellään uusi tiedostonnimi, luo sovellus uuden tiedoston käynnistettäessä.
 
 ## Ohjelman käynnistäminen
 
