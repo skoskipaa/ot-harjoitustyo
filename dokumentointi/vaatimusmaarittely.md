@@ -5,8 +5,8 @@ ajokilometrien, ajojen tarkoituksen ja muiden ajoneuvoihin liittyvien tapahtumie
 Sovellukseen on mahdollista syöttää useamman auton tietoja ja sillä voi olla useita käyttäjiä.
 
 ## Käyttäjät
-Sovelluksen käyttäjillä on vain yksi rooli, peruskäyttäjä, eli kuka tahansa voi syöttää 
-sovellukseen uuden ajoneuvon ja kirjata sovellukseen ajotapahtumia sekä tehdä hakuja.
+Sovelluksen käyttäjillä on vain yksi rooli, peruskäyttäjä, eli kuka tahansa voi käynnistää sovelluksen, syöttää 
+sovellukseen uuden ajoneuvon, kirjata sovellukseen ajotapahtumia sekä tehdä hakuja kirjautumatta.
 
 ## Käyttöliittymä
 Sovelluksessa on graafinen käyttöliittymä, joka sisältää neljä näkymää: päävalikon, uuden ajoneuvon 
