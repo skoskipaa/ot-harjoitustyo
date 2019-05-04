@@ -13,7 +13,7 @@ Sovelluksessa on graafinen käyttöliittymä, joka sisältää neljä näkymää
 syöttönäkymän, tapahtuman syöttönäkymän sekä hakunäkymän. Ajoneuvon tapahtumalistaus, kaikkien järjestelmän ajoneuvojen listaus sekä haun tulokset tulostuvat erilliseen ikkunaan.
 
 ## Toimintaympäristö
-Sovellus toimii Linux- ja OSX-käyttöjärjestelmillä. Sovelluksen tiedot tallennetaan paikallisesti levylle tietokantaan käyttäen h2-tietokannanhallintajärjestelmää.
+Sovellus toimii Linux- ja macOS-käyttöjärjestelmillä. Sovelluksen tiedot tallennetaan paikallisesti levylle tietokantaan käyttäen h2-tietokannanhallintajärjestelmää.
 
 ## Perusversion toiminnallisuus
 Käyttäjä voi
