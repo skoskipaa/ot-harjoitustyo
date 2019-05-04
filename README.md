@@ -4,15 +4,15 @@ Sovelluksen avulla on mahdollista ylläpitää ajopäiväkirjaa usealle ajoneuvo
 Sovellus käyttää h2-tietokannanhallintajärjestelmää ja luo sitä varten tietokannan tiedostoon, joka määritellään konfiguraatiotiedostossa.
 
 ## Dokumentaatio
-[Käyttöohje](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kayttoohje.md)
-
-[Työaikakirjanpito](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/tyoaikakirjanpito.md)
-
 [Vaatimusmäärittely](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)
+
+[Käyttöohje](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kayttoohje.md)
 
 [Arkkitehtuurikuvaus](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
 
 [Testausdokumentti](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/testausdokumentti.md)
+
+[Työaikakirjanpito](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/tyoaikakirjanpito.md)
 
 ## Releaset
 
