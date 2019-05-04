@@ -25,5 +25,6 @@
 |29.4.2019  |1.5  |Dokumentointia: testausdokumentin aloitus, vaatimusmäärittelyn päivitys |
 |1.5.2019   |2  |Testausta ja dokumentointia  |
 |2.5.2019   |2.5|JavaDocin täydennystä, koodin siistimistä |
+|4.5.2019   |3  |JavaDocin viimeistelyä, koodin viimeistelyä  |
 
-Yhteensä 57 tuntia
+Yhteensä 60 tuntia
