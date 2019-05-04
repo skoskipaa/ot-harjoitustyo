@@ -2,20 +2,19 @@
 
 ## Asennus ja konfigurointi
 
-Lataa tiedosto [vehiclelogapp.jar](https://github.com/skoskipaa/ot-harjoitustyo/releases/tag/viikko6).
-Käynnistyshakemistossa tulee olla myös tiedosto [config.properties](https://github.com/skoskipaa/ot-harjoitustyo/releases/tag/viikko6), jossa määritellään käytettävä tietokantatiedosto. Oletustiedoston sisältö on seuraava:
+Lataa tiedosto [vehiclelogapp.jar](https://github.com/skoskipaa/ot-harjoitustyo/releases/tag/viikko7).
+Käynnistyshakemistossa tulee olla myös tiedosto [config.properties](https://github.com/skoskipaa/ot-harjoitustyo/releases/tag/viikko7), jossa määritellään käytettävä tietokantatiedosto. Oletustiedoston sisältö on seuraava:
 
 database=jdbc:h2:./logbook  
 user=sa  
 password=  
 
-Tietokantatiedoston nimi on siis oletuksena *logbook*, käyttäjänimi *sa* ja salasana tyhjä. Nämä voi halutessaan määritellä konfigurointitiedostoon itse. Mikäli käyttäjänimeä tai salasanaa muutetaan tiedostossa tietokannan luomisen jälkeen, ohjelman suoritus keskeytyy. Mikäli tiedostoon määritellään uusi tiedostonnimi, luo sovellus uuden tiedoston käynnistettäessä.
+Tietokantatiedoston nimi on siis oletuksena *logbook*, käyttäjänimi *sa* ja salasana tyhjä. Nämä voi halutessaan määritellä konfigurointitiedostoon itse. Mikäli käyttäjänimeä tai salasanaa muutetaan tiedostossa tietokannan luomisen jälkeen, ohjelman suoritus keskeytyy käynnistettäessä. Mikäli tiedostoon määritellään uusi tiedostonimi, luo sovellus uuden tiedoston käynnistettäessä.
 
 ## Ohjelman käynnistäminen
 
 Ohjelma käynnistetään komentoriviltä komennolla  
-**java -jar VehicleLogApp.jar**
-
+**java -jar vehiclelogapp.jar**
 
 ## Päävalikko
 
@@ -25,11 +24,11 @@ Ohjelma käynnistyy päävalikkoon. Päävalikosta voidaan valita joko uuden ajo
 
 Kun halutaan listata tietyn ajoneuvon tapahtumat, valitaan ajoneuvo alasvetovalikosta ja painetaan nappia "Listaa ajoneuvon tapahtumat". Tapahtumat tulostuvat uuteen ikkunaan.
 
-Kun ohjelma suljetaan "Lopeta"-napista, auki olevat ikkunat sulkeutuvat.
+Kun ohjelma suljetaan "Lopeta"-napista, avoinna olevat ikkunat sulkeutuvat.
 
 ## Ajoneuvon syöttö
 
-Päävalikosta siirrytään ajoneuvon syöttöön "Lisää ajoneuvo"-napilla.
+Päävalikosta siirrytään ajoneuvon syöttöön "Lisää ajoneuvo" -napilla.
 
 <img src="https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kuvat/anlisays.png">
 
@@ -37,11 +36,11 @@ Ajoneuvon syöttönäkymässä annetaan lisättävän ajoneuvon rekisteritunnus 
 
 ## Tapahtuman syöttö
 
-Tapahtuman syöttöön siirrytään "Lisää tapahtuma"-napilla.
+Tapahtuman syöttöön siirrytään "Lisää tapahtuma" -napilla.
 
 <img src="https://github.com/skoskipaa/ot-harjoitustyo/blob/master/dokumentointi/kuvat/tapsyotto.png">
 
-Alasvetovalikosta valitaan ajoneuvo, jolle tapahtuma halutaan syöttää. Ajoneuvon viimeisimmän matkamittarilukeman saa näkyviin "Näytä ajoneuvon tiedot"-painikkeella. Oikean yläkulman alasvetovalikosta voidaan valita tapahtumalle tyyppi, joka on oletuksena "AJO". Tekstikenttiin annetaan matkamittarin lukema (suurempi kuin edellinen), kuljettajan nimi sekä vapaa selite. Tämän kentän perusteella voidaan tehdä hakuja tapahtumista. Cancel peruu tapahtuman syötön ja palaa aloitusnäkymään.
+Alasvetovalikosta valitaan ajoneuvo, jolle tapahtuma halutaan syöttää. Ajoneuvon viimeisimmän matkamittarilukeman saa näkyviin "Näytä ajoneuvon tiedot" -painikkeella. Oikean yläkulman alasvetovalikosta voidaan valita tapahtumalle tyyppi, joka on oletuksena "AJO". Tekstikenttiin annetaan matkamittarin lukema (suurempi kuin edellinen), kuljettajan nimi sekä vapaa selite. Tämän kentän perusteella voidaan tehdä hakuja tapahtumista. Cancel peruu tapahtuman syötön ja palaa aloitusnäkymään.
 
 ## Tapahtumien haku
 
