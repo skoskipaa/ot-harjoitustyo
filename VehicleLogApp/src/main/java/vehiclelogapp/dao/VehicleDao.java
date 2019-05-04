@@ -28,6 +28,14 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
 
     }
 
+    /**
+     * Luo uuden ajoneuvon tietokantaan
+     *
+     * @param vehicle Ajoneuvoa kuvaava Vehicle-olio
+     * @return Palauttaa luodun Vehicle-olion, käyttää apuna read()-metodia
+     * @see vehiclelogapp.dao.VehicleDao#read(java.lang.Integer)
+     * @throws SQLException poikkeus, mikäli epäonnistuu
+     */
     @Override
     public Vehicle create(Vehicle vehicle) throws SQLException {
         Connection conn = service.getDbConnection(databaseUrl, user, password);
@@ -47,6 +55,13 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
         return read(id);
     }
 
+    /**
+     * Lukee tietokannasta ajoneuvon tiedot
+     *
+     * @param key avain (id)
+     * @return Palauttaa Vehicle-olion
+     * @throws SQLException poikkeus, mikäli epäonnistuu
+     */
     @Override
     public Vehicle read(Integer key) throws SQLException {
         Connection conn = service.getDbConnection(databaseUrl, user, password);
@@ -65,6 +80,12 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
 
     }
 
+    /**
+     * Listaa kaikki tietokannan ajoneuvot
+     *
+     * @return Listan Vehicle-olioita
+     * @throws SQLException poikkeus, mikäli epäonnistuu
+     */
     @Override
     public ArrayList<Vehicle> list() throws SQLException {
 
@@ -88,9 +109,9 @@ public class VehicleDao implements Dao<Vehicle, Integer> {
     /**
      * Hakee ajoneuvon id:n tietokannasta
      *
-     * @param licensePlate Rekisteritunnus
+     * @param licensePlate rekisteritunnus
      * @return Ajoneuvon id Integer-muodossa
-     * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
+     * @throws SQLException heittää SQL-poikkeuksen, mikäli epäonnistuu
      */
     public Integer getVehicleId(String licensePlate) throws SQLException {
         Connection conn = service.getDbConnection(databaseUrl, user, password);

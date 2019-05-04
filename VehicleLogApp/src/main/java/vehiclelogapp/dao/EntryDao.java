@@ -20,12 +20,21 @@ public class EntryDao implements Dao<Entry, Integer> {
     private String password;
 
     public EntryDao(String databaseUrl, String user, String password) {
+
         this.service = new DaoService();
         this.databaseUrl = databaseUrl;
         this.user = user;
         this.password = password;
     }
 
+    /**
+     * Luo uuden tapahtuman tietokantaan. Käyttää myös read()-metodia.
+     *
+     * @see vehiclelogapp.dao.EntryDao#read(java.lang.Integer)
+     * @param entry tallennettava Entry-olio
+     * @return Tallennetun Entry-olion
+     * @throws SQLException poikkeus, mikäli epäonnistuu
+     */
     @Override
     public Entry create(Entry entry) throws SQLException {
         Connection conn = service.getDbConnection(databaseUrl, user, password);
@@ -49,6 +58,13 @@ public class EntryDao implements Dao<Entry, Integer> {
         return read(id);
     }
 
+    /**
+     * Lukee tietokannasta tapahtuman.
+     *
+     * @param key avain (id)
+     * @return Palauttaa Entry-olion
+     * @throws SQLException poikkeus, mikäli epäonnistuu
+     */
     @Override
     public Entry read(Integer key) throws SQLException {
 
@@ -69,6 +85,14 @@ public class EntryDao implements Dao<Entry, Integer> {
         return returnEntry;
     }
 
+    /**
+     * Listaa kaikki järjestelmässä olevat tapahtumat. Metodi ei ole sovelluksen
+     * tässä versiossa käytössä, mutta jätettiin koodiin tulevia laajennuksia
+     * varten.
+     *
+     * @return Palauttaa listan Entry-olioita
+     * @throws SQLException poikkeus, mikäli epäonnistuu
+     */
     @Override
     public ArrayList<Entry> list() throws SQLException {
         Connection conn = service.getDbConnection(databaseUrl, user, password);
@@ -86,6 +110,13 @@ public class EntryDao implements Dao<Entry, Integer> {
         return entries;
     }
 
+    /**
+     * Hakee tietokannasta tietyn ajoneuvon tapahtumat.
+     *
+     * @param vehicleId ajoneuvon id
+     * @return Tapahtumat listana Entry-olioita
+     * @throws SQLException poikkeus, mikäli epäonnistuu
+     */
     public ArrayList<Entry> listEntriesForVehicle(Integer vehicleId) throws SQLException {
         Connection conn = service.getDbConnection(databaseUrl, user, password);
 
@@ -109,9 +140,9 @@ public class EntryDao implements Dao<Entry, Integer> {
     /**
      * Hakee ajoneuvon viimeisimmän matkamittarin lukeman
      *
-     * @param vehicleId Ajoneuvon id tietokannassa
+     * @param vehicleId ajoneuvon id tietokannassa
      * @return Lukeman int-muodossa
-     * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
+     * @throws SQLException heittää SQL-poikkeuksen, mikäli epäonnistuu
      */
     public int latestOdometerForVehicle(Integer vehicleId) throws SQLException {
         Connection conn = service.getDbConnection(databaseUrl, user, password);
@@ -139,9 +170,9 @@ public class EntryDao implements Dao<Entry, Integer> {
      * Hakee tapahtumia tapahtumien tapahtumatyyppikenttään tehtävän sanahaun
      * perusteella.
      *
-     * @param type Hakusana
+     * @param type hakusana
      * @return Palauttaa kaikki tapahtumat (Entry), joissa haettu merkkijono
-     * @throws SQLException Heittää SQL-poikkeuksen, mikäli epäonnistuu
+     * @throws SQLException heittää SQL-poikkeuksen, mikäli epäonnistuu
      */
     public ArrayList<Entry> listEntriesByType(String type) throws SQLException {
         Connection conn = service.getDbConnection(databaseUrl, user, password);

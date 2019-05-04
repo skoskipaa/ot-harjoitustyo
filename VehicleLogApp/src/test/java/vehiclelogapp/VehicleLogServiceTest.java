@@ -12,7 +12,7 @@ public class VehicleLogServiceTest {
     private VehicleLogService testService;
 
     @Before
-    public void conn() {
+    public void conn() throws SQLException {
         testService = new VehicleLogService("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", "sa", "");
     }
 

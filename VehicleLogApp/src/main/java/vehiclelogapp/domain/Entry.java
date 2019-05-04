@@ -58,9 +58,9 @@ public class Entry {
 
     /**
      * VehicleLogServicen käyttämä konstruktori käyttäjän syötteiden käsittelyyn.
-     * @param odometer
-     * @param driver
-     * @param entryType 
+     * @param odometer  Matkamittarin lukema
+     * @param driver    Kuljettaja
+     * @param entryType Selite
      */
     public Entry(int odometer, String driver, String entryType) {
 

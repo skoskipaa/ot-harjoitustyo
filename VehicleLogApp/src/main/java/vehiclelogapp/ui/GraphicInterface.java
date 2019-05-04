@@ -41,7 +41,8 @@ public class GraphicInterface extends Application {
 
     /**
      * Lukee konfiguraatiotiedoston ja luo yhteyden toimintalogiikkaan. Luo
-     * listaolion valikkoja varten.
+     * listaolion valikkoja varten. Mikäli tietokannan käyttäjänimi tai salasana
+     * väärä, ohjelman suoritus keskeytetään.
      *
      * @throws FileNotFoundException Heittää poikkeuksen, jos tiedostoa ei
      * löydy.
@@ -57,7 +58,13 @@ public class GraphicInterface extends Application {
         String user = properties.getProperty("user");
         String pw = properties.getProperty("password");
 
-        service = new VehicleLogService(db, user, pw);
+        try {
+            service = new VehicleLogService(db, user, pw);
+        } catch (SQLException ex) {
+            System.out.println("\n** Tietokannan avaaminen epäonnistui. Väärä salasana tai käyttäjänimi konfiguraatiotiedostossa. **\n");
+            System.exit(0);
+        }
+
         vehicleMenuItems = FXCollections.observableArrayList();
 
     }

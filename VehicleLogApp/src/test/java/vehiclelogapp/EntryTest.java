@@ -2,10 +2,7 @@ package vehiclelogapp;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import vehiclelogapp.domain.Entry;

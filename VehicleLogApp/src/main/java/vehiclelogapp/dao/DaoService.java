@@ -14,7 +14,7 @@ public class DaoService {
     private String username;
     private String password;
 
-    public DaoService(String database, String username, String password) {
+    public DaoService(String database, String username, String password) throws SQLException {
 
         this.database = database;
         this.username = username;
@@ -47,17 +47,14 @@ public class DaoService {
      * @param user käyttäjänimi
      * @param pw salasana
      */
-    private static void setUpDatabase(String database, String user, String pw) {
+    private static void setUpDatabase(String database, String user, String pw) throws SQLException {
 
-        try (Connection conn = DriverManager.getConnection(database, user, pw)) {
+        Connection conn = DriverManager.getConnection(database, user, pw);
 
-            conn.prepareStatement("CREATE TABLE IF NOT EXISTS Vehicle(id integer auto_increment primary key, plate varchar(30), odometer integer);").executeUpdate();
-            conn.prepareStatement("CREATE TABLE IF NOT EXISTS Entry(id integer auto_increment primary key, vehicle_id integer, date timestamp(0), "
-                    + "odometerread integer, driver varchar(30), type varchar(50), last_trip integer, foreign key (vehicle_id) REFERENCES Vehicle(id));").executeUpdate();
+        conn.prepareStatement("CREATE TABLE IF NOT EXISTS Vehicle(id integer auto_increment primary key, plate varchar(30), odometer integer);").executeUpdate();
+        conn.prepareStatement("CREATE TABLE IF NOT EXISTS Entry(id integer auto_increment primary key, vehicle_id integer, date timestamp(0), "
+                + "odometerread integer, driver varchar(30), type varchar(50), last_trip integer, foreign key (vehicle_id) REFERENCES Vehicle(id));").executeUpdate();
 
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage() + " " + e.getSQLState());
-        }
     }
 
 }

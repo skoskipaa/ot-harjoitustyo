@@ -24,8 +24,10 @@ public class VehicleLogService {
      * @param database tietokantatiedoston nimi
      * @param user tiedoston käyttäjänimi
      * @param pw tiedoston salasana
+     * @throws SQLException Heittää SQL-poikkeuksen, mikäli tietokannan luonti
+     * DaoServicessä epäonnistuu.
      */
-    public VehicleLogService(String database, String user, String pw) {
+    public VehicleLogService(String database, String user, String pw) throws SQLException {
 
         this.entryDao = new EntryDao(database, user, pw);
         this.vehicleDao = new VehicleDao(database, user, pw);
