@@ -50,12 +50,14 @@ Tietojen pysyväistallennus on toteutettu pakkauksessa vehiclelogapp.dao. Tallen
 
 Tallennustiedoston tiedot ovat hakemiston juuressa sijaitsevassa [config.properties](https://github.com/skoskipaa/ot-harjoitustyo/blob/master/VehicleLogApp/config.properties)-konfiguraatiotiedostossa, jossa määritellään tallennustiedoston nimi, käyttäjätunnus ja salasana.
 
-## Parannuksia ohjelman rakenteeseen (rakenteeseen jääneet heikkoudet)
+## Sovelluksen rakenteeseen jääneet heikkoudet
 
-Dao-pakkauksen luokkien metodeissa on edelleen runsaasti toisteisuutta. Tätä voitaisiin vähentää siirtämällä toistuvaa koodia DaoService-luokan metodeihin. Toinen vaihtoehto metodien lyhentämiseen ja selkiyttämiseen olisi ottaa käyttön Spring-sovelluskehyksen JdbcTemplate-luokka tietokantayhteyden hallintaan.
+Dao-pakkauksen luokkien metodeissa on edelleen runsaasti toisteisuutta. Tätä voitaisiin vähentää siirtämällä toistuvaa koodia DaoService-luokan metodeihin. Toinen vaihtoehto metodien lyhentämiseen ja selkiyttämiseen olisi ottaa käyttöön esimerkiksi  Spring-sovelluskehyksen JdbcTemplate-luokka tietokantayhteyden hallintaan.
 
 Koska käsiteltävä tietomäärä ei ole toistaiseksi suuri, tietokantahakuja voisi yksinkertaistaa jättämällä tietokantahakutulosten lajittelun ja rajauksen sovelluslogiikan vastuulle. Tällöin ylimääräiset rajatun haun metodit voisi poistaa erityisesti EntryDao-luokasta.
 
 Syötteiden validointia tehdään sekä käyttöliittymässä että sovelluslogiikassa. Käyttäjälle saadaan annettua selkeämmät ja tarkemmat virheilmoitukset, kun validointia tehdään käyttöliittymässä, mutta aiheuttaa päällekkäisyyttä.
+
+EntryDao-luokan list()-metodia ei tämänhetkisessä versiossa tarvita toiminnallisuuksien toteuttamiseen. Se on kuitenkin jätetty sovellukseen jatkokehitystä varten.
 
 
