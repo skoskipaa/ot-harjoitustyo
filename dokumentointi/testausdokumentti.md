@@ -21,7 +21,7 @@ Koska DAO-luokkia testattiin sovelluslogiikan kautta eikä suoraan, testaamatta 
 ## Järjestelmätestaus
 
 ### Asennus ja konfigurointi
-Sovelluksen asennusta ja konfigurointia on testattu OSX-ympäristössä käyttöohjeessa esitetyllä tavalla asentamalla sovellus ja sen vaatima config.properties-tiedosto. Sovellusta on testattu ja se toimii tilanteissa, joissa tietokantatiedostoa ei ole vielä olemassa (ensimmäinen käynnistyskerta) sekä tilanteissa, joissa tietokantatiedosto on olemassa.
+Sovelluksen asennusta ja konfigurointia on testattu macOS-ympäristössä käyttöohjeessa esitetyllä tavalla asentamalla sovellus ja sen vaatima config.properties-tiedosto. Sovellusta on testattu ja se toimii tilanteissa, joissa tietokantatiedostoa ei ole vielä olemassa (ensimmäinen käynnistyskerta) sekä tilanteissa, joissa tietokantatiedosto on olemassa.
 
 ### Toiminnallisuudet
 Toiminnallisuuksia on testattu laajasti erilaisin syöttein manuaalisesti sekä automaattisin testein. Syötteeksi on annettu sekä sallittuja että epäkelpoja syötteitä kuten tyhjiä kenttiä tai kirjaimia numerokenttiin. Sovellus myös hylkää tapahtumasyötön syötteet, joissa kilometrilukema on pienempi kuin aikaisemman saman ajoneuvon tapahtuman.
